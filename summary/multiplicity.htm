@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>John Lesieutre: Multiplicities</title>
+
+<link rel="stylesheet" type="text/css" href="../css/style.css" media="screen" />
+
+<script src="index_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38900286-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+<div id="wrap">
+  <div id="top">
+    <h1>John Lesieutre</h1>
+  </div>
+
+  <div id="topmenu">
+    <div class="lefts"> 
+      <ul>
+        <li><a href="../index.htm">HOME</a></li>
+        <li><a href="../research.htm">RESEARCH</a></li>
+        <li><a href="../teaching.htm">TEACHING</a></li>
+        <li><a href="../summary/index.htm">INTRO</a></li>
+<!--        <li><a href="../personal/index.htm">PERSONAL</a></li>  -->
+        <li><a href="../cv.htm">CV</a></li>
+        <li><a href="../contact.htm">CONTACT</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="main">
+    <div id="maintext">
+      <div class="bottomnav">
+<a class="bottomnav" href="baseloci.htm">&laquo; Prev</a>
+| <a class="bottomnav" href="index.htm">Index</a>
+| <a class="bottomnav" href="bminus.htm">Next &raquo;</a>
+</div>
+
+<h2>Singularities: the multiplicity of a surface at a point</h2>
+
+<p>The examples we've seen already suggest that quadric surfaces have
+much more interesting geometry than planes do.  For one, there are a
+lot more of them, so we can ask them to pass through more elaborate
+configurations of points.  There's another new phenomenon which shows
+up for quadric surfaces which didn't show up for planes: they aren't
+always nice, smooth surfaces.  One example of this is a cone, defined
+by the equation <span class="inline">z<sup>2</sup> = x<sup>2</sup> +
+y<sup>2</sup></span>, which pinches off at one point.  Such a point
+where the surface is not smooth is called a <i>singularity</i>.</p>
+
+
+<div style="text-align:center">
+<img src="images/mult21.png" alt="The cone $z^2 = x^2 + y^2$"/>
+</div>
+
+<p>
+More complicated equations can give rise to even more complicated
+examples of singularities, a few of which are shown below.  Note that
+some of the equations have terms of degree bigger than two, so these
+are not quadric surfaces.</p>
+
+<div>
+<table class="center" style="border-spacing: 50px 0px;">
+<tr>
+<td><span class="inline">z<sup>2</sup> - 2x<sup>3</sup> - x<sup>2</sup> - (y - z)<sup>2</sup>/2 = 0</span></td>
+<td><span class="inline">x<sup>3</sup> + x<sup>2</sup> - y<sup>2</sup> - z<sup>2</sup> = 0</span></td>
+</tr>
+<tr>
+<td>
+<img src="images/mult22.png" alt="The singular surface $z^2 - 2x^3 - x^2 - (y-z)^2/2 = 0$" />
+</td>
+<td>
+<img src="images/mult23.png" alt="The singular surface $x^3 + x^2 - y^2 - z^2 = 0$" />
+</td>
+</tr>
+<tr>
+<td><span class="inline">x<sup>3</sup> + x<sup>2</sup> - y<sup>2</sup> = 0</span></td>
+<td><span class="inline">x<sup>2</sup> - y<sup>3</sup> + z<sup>5</sup> = 0</span></td>
+</tr>
+<tr>
+<td>
+<img src="images/mult24.png" alt="The singular surface $x^3 + x^2 - y^2 = 0$" />
+</td>
+<td>
+<img src="images/mult31.png" alt="The singular surface $x^2 - y^3 + z^5 = 0$" />
+</td>
+</tr>
+</table>
+</div>
+
+<p> These illustrate several distinct ways in which a surface can fail
+to be smooth at a point.  Some of these surfaces just look like cones,
+at least near the singular point.  In one of the others, two sheets of the
+surface intersect each other; here the multiplicity is two for any
+point contained in this intersection.  In the last example, the
+surface is just "pinched" at the singular point. </p>
+
+
+<p>The <i>multiplicity</i> of a surface at a point is a number which
+measures how far surface is from being smooth there.  If the
+multiplicity at a point is one, the surface is smooth at the point.
+If it's two or more, it isn't, and larger numbers correspond to even
+more complicated non-smoothness.  Each of the examples above has
+points of multiplicity two on an otherwise smooth surface.</p>
+
+
+<p>In most cases just looking at a picture doesn't give enough
+information to guess the multiplicity.  Instead, the multiplicity of a
+singularity is defined using the equation for the surface.  If the
+surface has equation <span class="inline">f(x,y,z)=0</span>, the
+multiplicity at the point <span class="inline">(0,0,0)</span> is equal
+to the smallest degree of any of the terms in <span
+class="inline">f</span>.  This is perhaps easiest to define by
+examples: </p>
+
+<div>
+<table class="center" style="border-spacing: 20px 0px;">
+<tr>
+<th>Equation</th>
+<th>Multiplicity at (0,0,0)</th>
+</tr>
+<tr>
+<td><span class="inline">x + y + z = 0</span></td>
+<td>1</td>
+</tr>
+<tr>
+<td><span class="inline">x<sup>2</sup> + y<sup>2</sup> - z<sup>2</sup> = 0</span></td>
+<td>2</td>
+</tr><tr>
+<td><span class="inline">x<sup>2</sup> + y<sup>3</sup> - z<sup>4</sup> = 0</span></td>
+<td>2</td>
+</tr><tr>
+<td><span class="inline">xy + y<sup>3</sup> - z<sup>4</sup> = 0</span></td>
+<td>2</td>
+</tr><tr>
+<td><span class="inline">xyz + y<sup>4</sup> - x<sup>2</sup> z<sup>2</sup> = 0</span></td>
+<td>3</td>
+</tr>
+</table>
+</div>
+
+<p> With the multiplicity so defined, we can now consider some
+additional families of surfaces.  Instead of merely specifying that a
+surface passes through a bunch of given points, we can ask that at
+some of those points it has a singularity with some specified
+multiplicity.  Below is an animation of the family of surfaces of
+degree 3 going through 16 specified points, with multiplicity of at
+least 2 at the first of the points (the points aren't shown in the
+picture). The point with multiplicity 2 is at the center of the box;
+observe that none of the surfaces in question is smooth there.  </p>
+
+<div style="text-align: center;">
+<video width="270" height="308" controls>
+  <source src="images/singpencil.mp4" type="video/mp4">
+  <source src="images/singpencil.webm" type="video/webm">
+  <source src="images/singpencil.ogv" type="video/ogg">
+</video>
+</div>
+
+<p> Much like the previous examples, this family has a base locus
+containing more than just the specified points.  Not unexpectedly, it
+is a somewhat complicated-looking configuration, shown below: </p>
+
+<div style="text-align:center">
+<img src="images/cubicbasecurve.png" alt="The cone $z^2 = x^2 + y^2$"/>
+</div>
+
+<br />
+<h2>Dependence of the base locus on <i>d</i> and <i>m<sub>i</sub></i></h2>
+
+<p> The examples we've encountered indicate the main questions one may
+ask about a family of surfaces through specified points.  Given <span
+class="inline">n</span> points in space, say <span
+class="inline">p<sub>1</sub></span>,...,<span
+class="inline">p<sub>n</sub></span>, a degree <span
+class="inline">d</span>, and <span class="inline">n</span>
+multiplicities <span class="inline">m<sub>1</sub></span>,...,<span
+class="inline">m<sub>n</sub></span>: </p>
+
+<ol class="numberlist"> 
+<li>Do there exist any surfaces of degree <span
+class="inline">d</span>, such that the multiplicity of each surface at
+each point <span class="inline">p<sub>i</sub></span> is at least <span
+class="inline">m<sub>i</sub></span>?</li> 
+<li>How many such surfaces are there?  Finitely many or infinitely many?</li> 
+<li>Does the collection of such surfaces have a base
+locus? What does it look like?</li> 
+</ol>
+
+<p>
+Let's collect together the answers to these questions for the various
+examples encountered so far.</p>
+
+<div>
+<table class="center" style="border-spacing: 20px 0px;">
+<tr>
+<th>Points</th>
+<th>Degree</th>
+<th>Multiplicities</th>
+<th>How many?</th>
+<th>Base locus</th>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>Infinite</td>
+<td>None</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>1,1</td>
+<td>Infinite</td>
+<td>Line through two points</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>1,1,1</td>
+<td>One</td>
+<td>Entire plane through three points</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>1,1,1,1</td>
+<td>None</td>
+<td>-</td>
+</tr>
+<tr>
+<td>5, in plane</td>
+<td>2</td>
+<td>1,1,1,1,1</td>
+<td>Infinite</td>
+<td>Circle through points</td>
+</tr>
+<tr>
+<td>8, not in plane</td>
+<td>2</td>
+<td>1,1,1,1,1,1,1,1</td>
+<td>Infinite</td>
+<td>"Wavy curve"</td>
+</tr>
+<tr>
+<td>9</td>
+<td>2</td>
+<td>1,1,1,1,1,1,1,1,1</td>
+<td>One</td>
+<td>Entire surface</td>
+</tr>
+<tr>
+<td>16</td>
+<td>3</td>
+<td>2,1,...,1</td>
+<td>Infinite</td>
+<td>See figure</td>
+</tr>
+<tr>
+<td>17</td>
+<td>3</td>
+<td>2,1,...,1</td>
+<td>One</td>
+<td>Entire surface</td>
+</tr>
+</table>
+</div>
+
+<p> Ideally, we'd like to be able to quickly calculate the answer to
+all of these questions whenever we're handed a degree and list of
+multiplicities.  Unfortunately, these questions turn out to be
+extremely difficult in practice -- it's not even known for which <span
+class="inline">d</span> and <span class="inline">m<sub>i</sub></span>
+the answer to the first question is affirmative.  But we can still
+make a couple basic observations in the right direction, by thinking
+about how the answers change when we vary the numbers <span
+class="inline">d</span> and <span class="inline">m<sub>i</sub></span>.
+A couple simple points jump out already:</p>
+
+<ol class="numberlist"> 
+
+<li>If <span class="inline">d</span> is increased, the number of
+surfaces increases, and the base locus shrinks.</li>
+
+<li>If any of the <span class="inline">m<sub>i</sub></span> are
+increased, the number of surfaces decreases, and the base locus
+grows.</li>
+
+</ol>
+
+<p> Increasing the degree gives us more freedom to choose a surface.
+Through three points, there is only a single plane (<span
+class="inline">d = 1</span>), but there are many quadric surfaces
+(<span class="inline">d = 2</span>).  Increasing the multiplicity serves
+to add more restrictions, and makes it harder to find surfaces.  There
+are fewer surfaces, and so more points are contained in all of them,
+giving a larger base locus.  </p>
+
+<div class="bottomnav">
+<a class="bottomnav" href="baseloci.htm">&laquo; Prev</a>
+| <a class="bottomnav" href="index.htm">Index</a>
+| <a class="bottomnav" href="bminus.htm">Next &raquo;</a>
+</div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,208 @@
+/* Reset margins and paddings */
+* { 
+	padding: 0;
+	margin: 0;
+}
+
+body { 
+	font: .8em Verdana, Arial, Sans-Serif; 
+	line-height: 1.6em; 
+	margin: 0
+}
+
+#wrap {	margin: 0 auto;	width: 90% }
+
+/* Top header */
+#top {
+	margin-top: 10px;
+	margin-bottom: 0px;
+	padding: 0px;
+	background: #001E44;  /* that's the blue */
+	height: 45px;
+	border-radius: 10px 10px 0px 0px;
+}
+#top h1 { padding: 10px 0 0 25px; color: #FFF; font-size: 180%; background: transparent;}
+
+#top .padding { padding-top: 10px; }
+ 
+ 
+/* Navigation menu */
+#topmenu {  	margin: 0px 0px 0 0px; 
+		padding: 0;
+		background: #91959C; /* background color (uic red) */
+		height: 35px;
+}
+
+#topmenu .menuitems { 
+	height: 35px; 
+	padding-left: 0px;
+}
+
+#topmenu ul {
+        padding: 0; 
+        margin: 0
+}
+#topmenu li a { 
+	color: #FFF;
+	text-align: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-decoration: none;
+	background: transparent;
+	font-weight: bold
+} 
+#topmenu li { padding: 0px;
+	float: left;
+	margin-top: 5px;
+	margin-left: 5px; /* space between buttons */
+	font-size: 11px;
+	line-height: 25px;
+	width: auto;
+	background: #00205b; /* that's the buttom color */
+	list-style-type: none;
+}
+
+#main { background: #FFF; margin: 10px 0 15px 0; color: #666; }
+
+
+/* Main text */
+#maintext {
+	padding-left: 8px;
+	color: #000;
+	background: #FFF;
+	margin-right: 0px;
+	margin-left: 0px;
+	
+}
+
+#maintext h2 { 
+    color: #000; 
+    font-size: 120%;
+}
+
+table.center {
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+ul.paperlist {
+    padding-left: 0px;
+    list-style-type: none;
+}
+
+ul.spacedlist {
+    padding-left: 0px;
+    list-style-type: none;
+}
+
+ul.spacedlist li {
+    margin: 0 0 10px 0;
+}
+
+ul.bulletlist {
+  padding-left: 25px;
+}
+
+dl.summaries dt {
+    font-size: small;
+    margin-bottom: 10px;
+}
+
+ol.numberlist {
+  padding-left: 25px;
+}
+
+table.center th {
+    text-align: left;
+    font-weight: bold;
+}
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
+
+span.inline{  /* inline equations */
+   font-style: italic;
+}
+
+span.footnote {
+    font-size: smaller;
+}
+
+div.video {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+a { color: #0066B3; background: inherit; text-decoration: none }
+
+p { margin-top: 5px; margin-bottom: 5px; }
+
+h1 { font: bold 1.9em Arial, Arial, Sans-Serif }
+
+h2 { font: bold 1.2em Arial, Arial, Sans-Serif; padding: 0; margin: 0 }
+
+ul {  padding-left: 0px; }
+
+ol {  padding-left: 0px; }
+
+
+
+#main #maintext .date a, #main #rightside a { border: 0; text-decoration: none; }
+
+#maintext #txt {width: 85%; height: 10em; padding: 3px 3px 3px 6px; margin-left:0em;}
+#maintext textarea { border: 1px solid #bbb; width: 85%;  }
+
+
+
+/* Navigation bar for multi-page articles */
+
+
+div.bottomnav {
+    font-size:140%;
+    margin:0px;
+    padding:0px;
+    width:100%;
+    height:20px;
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    margin: 10px 10px 25px;
+    overflow: hidden;
+    line-height: 0px;
+}
+
+.galleryItem {
+    float: left;
+}
+
+.galleryItem img {
+    max-width: 100%;
+    padding: 5px; 
+}
+
+
+/* Abstract hide/show for research page */
+
+.abstract{
+    display: inline;
+    font-size: small;
+}
+
+.showing{
+    display: block;
+    margin: 5px 20px 0px 20px;
+}
+
+.abstract.hidden span{
+    display: none;
+}
+
+.spamcheck {
+  visibility: hidden;
+}

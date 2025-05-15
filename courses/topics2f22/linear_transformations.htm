@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Linear Transformations</title>
+  <link rel="stylesheet" href="styles.css">
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Linear Transformations</h1>
+</header>
+<p>The topic of this chapter is linear transformations, from a fairly
+computational point of view – we’ll see an even more general version of
+this later on. But even in this quick introduction, we’ll run into some
+surprises:</p>
+<ul>
+<li><p>A derivation of an exact formula for the <span
+class="math inline">\(n\)</span>th Fibonacci number: <span
+class="math display">\[
+F_n = \frac{1}{\sqrt{5}} \left( \left( \frac{1+\sqrt{5}}{2} \right)^n -
+\left( \frac{1-\sqrt{5}}{2} \right)^n \right)
+\]</span> (The Fibonacci numbers are the sequence <span
+class="math inline">\(1,1,2,3,5,8,13,21,34,\dots\)</span>, where each
+term is the sum of the two before it.);</p></li>
+<li><p>A quick derivation of the trig identity <span
+class="math inline">\(\cos(\theta + \psi) = \cos \theta \cos \phi - \sin
+\theta \sin \psi\)</span> using matrix multiplication;</p></li>
+<li><p>An explanation of why matrix multiplication is defined by the
+somewhat arbitrary- and complicated-looking formula you’ve seen in the
+past;</p></li>
+<li><p>The reason for the “Jacobian determinant” that shows up when you
+make a substitution in a double integral.</p></li>
+<li><p>The origin of the mysterious <span class="math inline">\(r \, dr
+\, d\theta\)</span> and <span class="math inline">\(\rho^2 \sin \phi \,
+d\rho \, d\,\phi \, d\theta\)</span> expressions you’ve memorized for
+working in polar and spherical coordinates.</p></li>
+</ul>
+<p>TODO: Define a linear transformation, and explain how a matrix always
+gives you a linear transformation.</p>
+<p>This script shows the image of a square and a letter “F” when we
+apply the linear transformation given by the matrix <span
+class="math inline">\(M\)</span>, which you can enter on the first line.
+The original unit square shows in a lighter shade to help distinguish
+the two.</p>
+<p>(The reason for the “F” will become apparent later: if the “F”
+remains an “F” after the transformation – even a very stretched out and
+rotated “F” – then the transformation has positive determinant. If the
+“F” becomes a backwards “F” (i.e. a “ꟻ”), then the transformation has
+negative determinant.)</p>
+<div class="sage">
+
+<script type="text/x-sage">
+
+# Set the matrix here.
+M = [[1,2],[0,1]]
+
+# For plotting a path given by list of pairs, maybe not a loop.
+def get_pairs_picture( vertices, pairs, colors, emph=1.0 ):
+
+  lines = []
+  for j in range(len(pairs)):
+    thispair = pairs[j]
+    newline = line([vertices[thispair[0]],vertices[thispair[1]]],color=colors[j],alpha=emph,thickness=2)
+    lines.append(newline)
+  alllines = sum(lines)
+
+  return alllines
+
+# Convert a path into a list of pairs to conect.
+def path_to_pairs( path ):
+  return [ [path[j],path[j+1]] for j in range(len(path)-1) ]
+
+
+square_vertices = [(0,0),(1,0),(1,1),(0,1)]
+square_path = [0,1,2,3,0]
+square_pairs = path_to_pairs(square_path)
+square_colors = ["green","red","blue","purple"]
+new_vertices = [ tuple(matrix(M)*vector(vv)) for vv in square_vertices ]
+
+F_vertices = [(1/3,1/4),(1/3,1/2),(1/3,3/4),(2/3,3/4),(2/3,1/2)]
+F_pairs = [[0,2],[2,3],[1,4]]
+F_colors = len(F_pairs)*["black"]
+F_new_vertices = [ tuple(matrix(M)*vector(vv)) for vv in F_vertices ]
+
+square = get_pairs_picture(square_vertices,square_pairs,square_colors,0.3)
+parallelogram = get_pairs_picture(new_vertices,square_pairs,square_colors,1.0)
+F = get_pairs_picture(F_vertices,F_pairs,F_colors,0.3)
+Fnew = get_pairs_picture(F_new_vertices,F_pairs,F_colors,1.0)
+
+both = square+F+parallelogram+Fnew
+
+both.show(axes=False,aspect_ratio=1)
+
+</script>
+
+</div>
+<h1 id="parametrized-regions">Parametrized regions</h1>
+<p>Next we discussed the Jacobian determinant. This shows up when you’re
+doing a multivariable change of variables. Here’s a demonstration that
+will plot a parametrized region of your choice.</p>
+<div class="sage">
+
+<script type="text/x-sage">
+
+var('s,t')
+x = s*cos(t)
+y = s*sin(t)
+
+s_range = [0,1]
+t_range = [0,2*pi]
+
+s_values = 4 # How many different s values should we use in our range?
+t_values = 12 # How many different t values should we use in our range?
+
+# Now generate the mesh; you probably don't want to change these.
+s_step = (s_range[1]-s_range[0])/(s_values) # Step size for s grid (don't change me, probably).
+t_step = (t_range[1]-t_range[0])/(t_values) # Step size for s grid (don't change me, probably).
+s_cuts = [ s_range[0] + j*s_step for j in range(s_values+1) ]
+t_cuts = [ t_range[0] + j*t_step for j in range(t_values+1) ]
+
+stripes1 = [ parametric_plot( (x.subs(t=tsub),y(t=tsub) ),(s,s_range[0],s_range[1]),color="blue",axes=False ) for tsub in t_cuts ]
+stripes2 = [ parametric_plot( (x.subs(s=ssub),y(s=ssub) ),(t,t_range[0],t_range[1]),color="red",axes=False ) for ssub in s_cuts ]
+
+# Display the plots.
+(sum(stripes1)+sum(stripes2)).show(axes=True)
+
+</script>
+
+</div>
+<p>The red lines depict parts of the parametrization where <span
+class="math inline">\(s\)</span> is held constant and <span
+class="math inline">\(t\)</span> varies throughout its range. The blue
+lines are where <span class="math inline">\(t\)</span> is held constant
+and <span class="math inline">\(s\)</span> varies throughout its
+range.</p>
+<p>With the script as a guide, try to parametrize some regions.</p>
+<ul>
+<li>First quadrant portion of the unit circle</li>
+<li>The region between <span class="math inline">\(x=1\)</span>, <span
+class="math inline">\(y=x^2\)</span>, and <span
+class="math inline">\(y=0\)</span>.</li>
+<li>Parallelogram <span
+class="math inline">\((0,0),(1,2),(2,1),(3,3)\)</span></li>
+<li>Trapezoid <span
+class="math inline">\((-3,0),(-1,3),(1,3),(3,0)\)</span></li>
+</ul>
+<div class="problem">
+<p><strong>Problem: </strong>Let <span class="math inline">\(R\)</span>
+be the upper half of the unit disk (i.e. a solid semicircle of radius
+<span class="math inline">\(1\)</span>). Find the <span
+class="math inline">\(y\)</span>-coordinate of the center of mass of
+<span class="math inline">\(R\)</span> by computing <span
+class="math display">\[
+\iint_R y \, dx \, dy
+\]</span> Do this by a change of coordinates.</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>I should solve this problem.</p>
+<p>Notice: in the course of doing this, we discovered the polar area
+element <span class="math inline">\(r \, dr \, d\theta\)</span>!</p>
+</div>
+<div class="problem">
+<p><strong>Problem: </strong>Find the formula for the spherical volume
+element. Reminder: spherical coordinates are defined by the equations:
+<span class="math display">\[\begin{align*}
+x &amp;= \rho \cos \theta \sin \phi \\
+y &amp;= \rho \sin \theta \sin \phi \\
+z &amp;= \rho \cos \phi
+\end{align*}\]</span></p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>We have to use a $3 $ Jacobian this
+time.</p>
+<p>It’s given by <span class="math display">\[\begin{align*}
+\begin{pmatrix}
+x_\rho &amp; x_\theta &amp; x_\phi \\
+y_\rho &amp; y_\theta &amp; y_\phi \\
+z_\rho &amp; z_\theta &amp; z_\phi
+\end{pmatrix}
+&amp;=
+\begin{pmatrix}
+\cos \theta \sin \phi &amp; -\rho \sin \theta \sin \phi &amp; \rho \cos
+\theta \cos \phi \\
+\sin \theta \sin \phi &amp; \rho \cos \theta \sin \phi &amp; \rho \sin
+\theta \cos \phi \\
+\cos \phi &amp; 0 &amp; - \rho \sin \phi
+\end{pmatrix}
+\end{align*}\]</span></p>
+<p>This is a bit of a mess, and I hope you’ll forgive me for omitting
+the algebra. (Basically you should write out all the terms from the
+formula for a <span class="math inline">\(3 \times 3\)</span>
+determinant and then use the Pythagorean formula <span
+class="math inline">\(\sin^2 \alpha + \cos^2 \alpha = 1\)</span> a
+couple times. The result is <span class="math inline">\(-\rho^2
+\sin(\phi)\)</span>. But remember we need to take the absolute value to
+get a positive volume. The term <span
+class="math inline">\(\rho^2\)</span> is always positive, and <span
+class="math inline">\(\sin(\phi)\)</span> is also positive in spherical
+coordinates since <span class="math inline">\(0 \leq \phi \leq
+\pi\)</span>. So in fact the determinant is negative of this: <span
+class="math inline">\(\rho^2 \sin(\phi)\)</span>, and the volume element
+is <span class="math display">\[
+dx \, dy \, dz = \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta.
+\]</span></p>
+<p>(This is admittedly a bit of a mess – there’s also a more geometric
+way to derive it! But at least it shows that the spherical volume
+element is also just a special case of the Jacobian determinant.)</p>
+</div>
+<h1 id="eigenvalues">Eigenvalues</h1>
+<p>Here’s the same script, but it also shows eigenvectors.</p>
+<div class="sage">
+
+<script type="text/x-sage">
+
+
+
+
+
+# Set the matrix here.
+M = matrix(QQbar,[[0,1],[1,1]])
+
+# For plotting a path given by list of pairs, maybe not a loop.
+def get_pairs_picture( vertices, pairs, colors, emph=1.0 ):
+
+  lines = []
+  for j in range(len(pairs)):
+    thispair = pairs[j]
+    newline = line([vertices[thispair[0]],vertices[thispair[1]]],color=colors[j],alpha=emph,thickness=2)
+    lines.append(newline)
+  alllines = sum(lines)
+
+  return alllines
+
+# Convert a path into a list of pairs to conect.
+def path_to_pairs( path ):
+  return [ [path[j],path[j+1]] for j in range(len(path)-1) ]
+
+
+
+square_vertices = [(0,0),(1,0),(1,1),(0,1)]
+square_path = [0,1,2,3,0]
+square_pairs = path_to_pairs(square_path)
+square_colors = ["green","red","blue","purple"]
+new_vertices = [ tuple(M*vector(vv)) for vv in square_vertices ]
+
+F_vertices = [(1/3,1/4),(1/3,1/6*(sqrt(5)+1)),(1/3,3/4),(2/3,3/4),(2/3,1/6*(sqrt(5)+1))]
+F_pairs = [[0,2],[2,3],[1,4]]
+F_colors = len(F_pairs)*["black"]
+F_new_vertices = [ tuple(M*vector(vv)) for vv in F_vertices ]
+
+square = get_pairs_picture(square_vertices,square_pairs,square_colors,0.3)
+parallelogram = get_pairs_picture(new_vertices,square_pairs,square_colors,1.0)
+F = get_pairs_picture(F_vertices,F_pairs,F_colors,0.3)
+Fnew = get_pairs_picture(F_new_vertices,F_pairs,F_colors,1.0)
+
+
+def normalize(v): # Make vector length 1 and in the upper half plane.
+  v = v/v.norm()
+  return v
+
+# That generates the plot of the square, like other.
+# Now the eigenvectors.
+eigenvector_list = M.eigenvectors_right()
+vs = [ normalize(evect[1][0]) for evect in eigenvector_list ]
+eigenvector_colors = ["yellow","orange"]
+
+eplots = sum([line([-vs[i],vs[i]],color=eigenvector_colors[i]) for i in range(len(vs)) ])
+
+
+both = square+F+parallelogram+Fnew+eplots
+both.show(axes=False,aspect_ratio=1)
+
+
+</script>
+
+</div>
+<h1 id="references">References</h1>
+</body>
+</html>

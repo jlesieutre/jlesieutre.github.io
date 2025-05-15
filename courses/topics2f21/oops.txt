@@ -1,0 +1,3 @@
+Sorry, I forgot to record this lecture!  I am very sorry for the oversight.
+
+I hope you will nevertheless be able to make sense of the slides, and the solutions for the worksheet should also be helpful.  We made it up to exercise 3a in the worksheet.  In the book, we finished Chapter 7 and started Chapter 8.  We defined limits of functions from the left and right and did one example.  We will continue with this topic on Friday.

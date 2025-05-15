@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>John Lesieutre: Base loci</title>
+
+<link rel="stylesheet" type="text/css" href="../css/style.css" media="screen" />
+
+<script src="index_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38900286-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+<div id="wrap">
+  <div id="top">
+    <h1>John Lesieutre</h1>
+  </div>
+
+  <div id="topmenu">
+    <div class="lefts"> 
+      <ul>
+        <li><a href="../index.htm">HOME</a></li>
+        <li><a href="../research.htm">RESEARCH</a></li>
+        <li><a href="../teaching.htm">TEACHING</a></li>
+        <li><a href="../summary/index.htm">INTRO</a></li>
+<!--        <li><a href="../personal/index.htm">PERSONAL</a></li>  -->
+        <li><a href="../cv.htm">CV</a></li>
+        <li><a href="../contact.htm">CONTACT</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="main">
+    <div id="maintext">
+      <div class="bottomnav">
+&laquo; Prev
+| <a class="bottomnav" href="index.htm">Index</a>
+| <a class="bottomnav" href="multiplicity.htm">Next &raquo;</a>
+</div>
+
+<h2>Planes through given points</h2>
+
+<p>
+Given any two points in three-dimensional space, there are lots of
+planes which pass through both of them:
+</p>
+
+<div style="text-align:center">
+<img src="images/planes.png" alt="Three planes containing a line"/>
+</div>
+
+<p> All of these planes have something more in common: they contain
+the entire line between the two points.  Any plane which passes
+through both of the points necessarily also passes through every other
+point on the line between them.  This is not particularly shocking, of
+course, but it's the simplest instance of a much more general idea,
+the <i>base locus</i> of a collection of surfaces.  For any collection
+of surfaces, the base locus of that collection consists of all the
+points which are contained in each of the surfaces.  In this case, our
+collection is all the planes going through both points, and the base
+locus is the line through the two points. </p>
+
+<p> If we only specified one point for the planes to go through, the
+collection of planes is much bigger.  Besides the specified point
+itself (which we won't count), there aren't any other points that all
+of the planes pass through; that is to say, the base locus of the
+collection doesn't contain anything at all.  </p>
+
+<p> 
+At the other extreme, if we specify three points through which
+planes must pass, there's only one satisfactory plane in the first
+place: the collection of planes through the points has only a single
+item!  Thus we (somewhat vacuously) must regard every point on a plane
+as being in the base locus of the collection.
+</p>
+
+<p>
+Trying to take it further, the collection of all planes through four
+points doesn't contain anything at all.  There's no way to find a
+plane that goes through all four corners of a pyramid. The base locus
+doesn't really make sense here.
+<p>
+
+<div>
+<table class="center" style="border-spacing: 20px 0px;">
+<tr>
+<th>No. points</th>
+<th>Base locus</th>
+</tr>
+<tr>
+<td>1</td>
+<td>None</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Line between points</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Entire plane</td>
+</tr>
+<tr>
+<td>4</td>
+<td>-</td>
+</tr>
+</table>
+</div>
+
+<br />
+<h2>Quadric surfaces through given points</h2>
+
+<p> The study of the base locus becomes much more interesting when we
+consider collections of surfaces other than planes.
+Remember that one way to think of a plane in
+space is as the set of points <span class="inline">(x,y,z)</span>
+which satisfy some relation <span class="inline">ax + by + cz =
+d</span>, where <span class="inline">a</span>, <span
+class="inline">b</span>, <span class="inline">c</span>, and <span
+class="inline">d</span> are numbers (different sets of numbers define
+different planes). If we consider more complicated equations, we get
+more interesting surfaces.  For example, <span
+class="inline">x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> - 1 =
+0</span> is satisfied exactly when <span class="inline">(x,y,z)</span>
+is at a distance 1 from the point <span class="inline">(0,0,0)</span>,
+so the set of solutions is a sphere with radius 1.  A few more
+elaborate examples are illustrated below.  </p>
+
+<div>
+<table class="center" style="border-spacing: 50px 0px; text-align: center;">
+<tr>
+<td><span class="inline">x<sup>2</sup> + 2y<sup>2</sup> + 4z<sup>2</sup> - 25 = 0</span></td>
+<td><span class="inline">x<sup>2</sup> + y<sup>2</sup> - z<sup>2</sup> - 10 = 0</span></td>
+</tr>
+<tr>
+<td>
+<img src="images/quadric1.png" alt="The quadric surface $x^2 + 2y^2 - 4z^2 - 25 = 0$" />
+</td>
+<td>
+<img src="images/quadric2.png" alt="The quadric surface $x^2 + y^2 - z^2 - 10 = 0$" />
+</td>
+</tr>
+<tr>
+<td><span class="inline">x<sup>2</sup> - y<sup>2</sup> - 3z = 0</span></td>
+<td><span class="inline">x<sup>2</sup> + y<sup>2</sup> - z<sup>2</sup> = 0</span></td>
+</tr>
+<tr>
+<td>
+<img src="images/quadric3.png" alt="The quadric surface $x^2 + 2y^2 - 4z^2 - 25 = 0$" />
+</td>
+<td>
+<img src="images/mult21.png" alt="The quadric surface $x^2 + y^2 - z^2 = 0$" />
+</td>
+</tr>
+</table>
+</div>
+
+<p> While these surfaces don't look too much alike, they are all
+defined by fairly simple equations: the only things that appear are
+the variables <span class="inline">x</span>, <span
+class="inline">y</span> and <span class="inline">z</span>, together
+with their squares and the products of any two of them. A surface
+which is defined by such an equation (i.e. an equation which may be
+written in the form <span class="inline">ax<sup>2</sup> +
+by<sup>2</sup> + cz<sup>2</sup> + dxy +exz + fyz + gx + hy + iz +
+j = 0</span>) is called a <i>quadric surface</i>.  Exactly what a quadric
+looks like depends on the various coefficients, but they are
+geometrically the simplest class of surfaces beyond planes. </p>
+
+<p> Just as with planes, we can think about the collection of quadric
+surfaces which pass through some specified points. Now the study of
+the base locus becomes much more delicate. There are a lot more
+quadrics than there are planes - we need to specify ten different
+coefficients to define a quadric, vs. only four for a plane.  Simply
+asking that a quadric pass through two points isn't very restrictive;
+like asking for a plane through a single point, there are so many such
+quadrics that the collection has no base locus.  But when we consider
+the set of quadrics which pass through some larger number of points,
+there are various possibilities for the base locus of the collection,
+which take a surprising shape! </p>
+
+<p>
+First, let's consider the simple case of specifying five points which
+form a regular pentagon in the <span class="inline">xy</span>-plane.  
+</p>
+
+<div style="text-align:center">
+<img src="images/pentagon.png" alt="Five points in a pentagon"/>
+</div>
+
+<p> There are many quadrics going through all five points, a handful
+of which are shown below.  </p>
+
+<div>
+<table class="center" style="border-spacing: 50px 0px;">
+<tr>
+<td>
+<img src="images/quadricpen1.png" alt="Quadric surface through five points, #1" />
+</td>
+<td>
+<img src="images/quadricpen2.png" alt="Quadric surface through five points, #2" />
+</td>
+</tr>
+<tr>
+<td>
+<img src="images/quadricpen3.png" alt="Quadric surface through five points, #3" />
+</td>
+<td>
+<img src="images/quadricpen4.png" alt="Quadric surface through five points, #4" />
+</td>
+</tr>
+</table>
+</div>
+
+<p> These pictures suggest that the collection of quadric surfaces
+going through the five points does indeed have a base locus: each of
+them contains not only the five points, but every point on the circle
+which goes through the five points.  That circle is the base locus of
+the collection.</p>
+
+<p> The base locus can also be understood in terms of the equations
+for the surfaces in question.  If the five given points <span
+class="inline">(x<sub>i</sub>,y<sub>i</sub>,z<sub>i</sub>)</span> are
+all solutions of some equation <span class="inline">f(x,y,z) = 0</span>
+(where <span class="inline">f(x,y,z)</span> is a polynomial of degree
+2), then every other point on the circle through the five points must
+be a solution of this equation as well.</p>
+
+<p> As a second example, suppose we pick eight points in space.  There
+ are infinitely many quadrics which go through all eight: </p>
+
+<div style="text-align: center;">
+<video width="270" height="308" controls>
+  <source src="images/eightpt.mp4" type="video/mp4">
+  <source src="images/eightpt.webm" type="video/webm">
+  <source src="images/eightpt.ogv" type="video/ogg">
+</video>
+</div>
+
+<p> It's not obvious at first glance, but there are points contained
+in all of these quadrics other than the eight that were
+specified.  In fact, every surface through the eight points contains
+the entire wavy curve illustrated below.  This curve is the base locus
+of the collection.</p>
+
+<div style="text-align:center">
+<img src="images/curvepts.png" alt="Base locus through the eight points"/>
+</div>
+
+<p>
+Watch these surfaces move again, this time with the curve marked.
+</p>
+
+<div style="text-align: center;">
+<video width="270" height="308" controls>
+  <source src="images/quadricpencil.mp4" type="video/mp4">
+  <source src="images/quadricpencil.webm" type="video/webm">
+  <source src="images/quadricpencil.ogv" type="video/ogg">
+</video>
+</div>
+
+<p> On the other hand, if we specified just one more point in addition
+to these eight (one not already contained in the base locus) there
+would be only one quadric surface going through all of them.  The base
+locus would then be that entire surface.  If the added point were
+contained in the base locus, exactly the same surfaces would still go
+through all the points, and the base locus would not change.</p>
+
+<div class="bottomnav">
+&laquo; Prev
+| <a class="bottomnav" href="index.htm">Index</a>
+| <a class="bottomnav" href="multiplicity.htm">Next &raquo;</a>
+</div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

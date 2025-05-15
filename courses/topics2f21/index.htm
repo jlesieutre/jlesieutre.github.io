@@ -1,0 +1,937 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Advanced Topics 2, Fall 2021</title>
+  <link rel="stylesheet" type="text/css" href="../../css/course.css" media="screen" />
+<script src="index_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38900286-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+<h2>Advanced Topics 2</h2>
+<p>
+Instructor: John Lesieutre<br>
+Email: jdl@psu.edu<br>
+Location: Room B-245, B days, Block 3
+</p>
+
+<p>Demonstrations and simulations are on <a href="https://cocalc.com/">CoCalc</a>!</p>
+
+<table cellpadding=1 border=1 cellspacing=0>
+<tr>
+<td align="center"><b>Lecture</b></td>
+<td align="center"><b>Date</b></td>
+<td align="center"><b>Topic</b></td>
+<td align="center"><b>Notes</b></td>
+<td align="center"><b>Handouts</b></td>
+</tr>
+
+<br />
+
+<!-- Week 1 -->
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Topic 1: Cryptography</td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">1</td>
+<td>8/25</td>
+<td>Diffie--Hellman key exchange</td>
+<td><a href="t01.pdf">slides</a></td>
+<td><a href="p01.pdf">worksheet</a>, <a href="s01.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">2</td>
+<td>8/27</td>
+<td>RSA, digital signatures</td>
+<td><a href="scan02.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Topic 2: Linear algebra</td>
+<td></td>
+</tr>
+
+
+<tr bgcolor="FFFFFF">
+<td align="center">3</td>
+<td>8/31</td>
+<td>Matrices and linear maps</td>
+<td><a href="scan03.pdf">notes</a></td>
+<td><a href="p02.pdf">worksheet</a>, <a href="s02.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">4</td>
+<td>9/2</td>
+<td>Linear maps and determinants</td>
+<td><a href="scan04.pdf">notes</a></td>
+<td></td>
+</tr>
+
+
+<tr bgcolor="FFFFFF">
+<td align="center">5</td>
+<td>9/7</td>
+<td>Jacobian determinant, eigenstuff</td>
+<td><a href="scan05.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">6</td>
+<td>9/10</td>
+<td>The Fibonacci formula</td>
+<td><a href="scan06.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Topic 3: Knot theory</td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">7</td>
+<td>9/13</td>
+<td>Reidemeister moves, tricolorability</td>
+<td><a href="scan07.pdf">notes</a></td>
+<td><a href="p03.pdf">worksheet</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">8</td>
+<td>9/15</td>
+<td>More on "classical" invariants</td>
+<td><a href="scan08.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">9</td>
+<td>9/17</td>
+<td>Connected sums, Alexander polynomial</td>
+<td><a href="scan09.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Topic 4: Real analysis</td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">10</td>
+<td>9/21</td>
+<td>Limits of sequences</td>
+<td><a href="scan10.pdf">notes</a></td>
+<td><a href="p04.pdf">worksheet</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">11</td>
+<td>9/23</td>
+<td>Continuity (and some wild functions)</td>
+<td><a href="scan11.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">12</td>
+<td>9/27</td>
+<td>Derivatives (and the Weierstrass function)</td>
+<td><a href="scan12.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Topic 5: Matrix computations</td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">13</td>
+<td>9/29</td>
+<td>Row reduction</td>
+<td><a href="scan13.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">14</td>
+<td>10/1</td>
+<td>More row reduction</td>
+<td><a href="scan14.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">15</td>
+<td>10/5</td>
+<td>Some applications: determinant, inverse</td>
+<td><a href="scan15.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">16</td>
+<td>10/7</td>
+<td>LU decomposition, Markov processes</td>
+<td><a href="scan16.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">17</td>
+<td>10/12</td>
+<td>Primality testing and Pollard rho</td>
+<td><a href="scan17.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Topic 6: Game theory</td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">18</td>
+<td>10/14</td>
+<td>Probability, game trees</td>
+<td><a href="scan18.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">19</td>
+<td>10/18</td>
+<td>Strategic form; hex, nim</td>
+<td><a href="scan19.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">20</td>
+<td>10/20</td>
+<td>Game theory</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">21</td>
+<td>10/22</td>
+<td>Solving cubics</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">22</td>
+<td>10/26</td>
+<td>Nash equilibrium, fixed-point theorems</td>
+<td><a href="scan20.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Topic 7: Optimization</td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">23</td>
+<td>11/1</td>
+<td>Critical points; optimizing over closed sets</td>
+<td><a href="scan21.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">24</td>
+<td>11/3</td>
+<td>More critical points; Lagrange multipliers</td>
+<td><a href="scan22.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">25</td>
+<td>11/5</td>
+<td>Linear programming (+fun facts)</td>
+<td><a href="scan23.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">26</td>
+<td>11/9</td>
+<td>More linear programming, root-finding with Newton</td>
+<td><a href="scan24.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">27</td>
+<td>11/11</td>
+<td>More Newton's method, modes of failure, basins of attraction</td>
+<td><a href="scan25.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">28</td>
+<td>11/15</td>
+<td>Taylor series review and applications</td>
+<td><a href="scan26.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">29</td>
+<td>11/17</td>
+<td>Optimization with Newton's method (+ start dynamics)</td>
+<td><a href="scan27.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Topic 8: Dynamical systems and chaos</td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">29</td>
+<td>11/17</td>
+<td>The logistic map, bifurcation diagram </td>
+<td><a href="scan28.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">30</td>
+<td>11/19</td>
+<td>More logistic map; Julia sets</td>
+<td><a href="scan29.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">31</td>
+<td>11/23</td>
+<td>The Mandlebrot set; first examples of Hausdorff dimension</td>
+<td><a href="scan30.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">32</td>
+<td>12/1</td>
+<td>Hausdorff dimension in general; entropy</td>
+<td><a href="scan31.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Topic 9: Basics of inequalities</td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">33</td>
+<td>12/3</td>
+<td>Inequalities: AM/GM and Cauchy-Schwartz</td>
+<td><a href="scan32.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">34</td>
+<td>12/6</td>
+<td>Inequalities: Jensen + vector spaces</td>
+<td><a href="scan33.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Topic 10: Vector spaces and projection</td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">35</td>
+<td>12/8</td>
+<td>Vector spaces and subspaces</td>
+<td><a href="scan34.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">36</td>
+<td>12/10</td>
+<td>Inner product spaces</td>
+<td><a href="scan35.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">37</td>
+<td>12/14</td>
+<td>The projection formula, Gram-Schmidt process</td>
+<td><a href="scan36.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">38</td>
+<td>12/16</td>
+<td>Best fit lines and curves</td>
+<td><a href="scan37.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">39</td>
+<td>12/20</td>
+<td>More best fit, start Fourier</td>
+<td><a href="scan38.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">40</td>
+<td>12/22</td>
+<td>Fourier series</td>
+<td><a href="scan39.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Topic 11: Differential equations</td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">41</td>
+<td>1/4</td>
+<td>Introduction; first-order linear equations</td>
+<td><a href="scan40.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">42</td>
+<td>1/6</td>
+<td>Second-order linear homogeneous equations</td>
+<td><a href="scan41.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">43</td>
+<td>1/10</td>
+<td>An inhomogeneous equation</td>
+<td><a href="scan42.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">44</td>
+<td>1/12</td>
+<td>The heat equation, take I</td>
+<td><a href="scan43.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">45</td>
+<td>1/18</td>
+<td>The heat equation, take II</td>
+<td><a href="scan44.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">46</td>
+<td>1/20</td>
+<td>The wave equation</td>
+<td><a href="scan45.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Topic 12: Random walks</td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">47</td>
+<td>1/20</td>
+<td>One-dimensional random walks</td>
+<td><a href="scan46.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">48</td>
+<td>1/24</td>
+<td>More one-dimensional random walks (short class)</td>
+<td><a href="scan47.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">49</td>
+<td>1/26</td>
+<td>Two-dimensional random walks, gambler's ruin</td>
+<td><a href="scan48.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Topic 13: Calculus of variations</td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">50</td>
+<td>1/28</td>
+<td>Finish random walks; start variations; brachistochrone fun</td>
+<td><a href="scan49.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">51</td>
+<td>2/1</td>
+<td>Brachistochrone; The Euler-Lagrange equation</td>
+<td><a href="scan50.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">52</td>
+<td>2/3</td>
+<td>Cycloids</td>
+<td><a href="scan51.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Topic 14: Elliptic curves</td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">52</td>
+<td>2/3</td>
+<td><a href="https://www.quora.com/How-do-you-find-the-positive-integer-solutions-to-frac-x-y+z-+-frac-y-z+x-+-frac-z-x+y-4/answer/Alon-Amit">The fruit meme equation</a>; the group law</td>
+<td><a href="scan51.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">53</td>
+<td>2/8</td>
+<td>Groups; solutions mod p</td>
+<td><a href="scan52.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">54</td>
+<td>2/10</td>
+<td>Addition mod p; repeated doubling; ECDH</td>
+<td><a href="scan53.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">55</td>
+<td>2/14</td>
+<td>ECDH + ECDSA</td>
+<td><a href="scan54.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Topic 15: Topology</td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">56</td>
+<td>2/16</td>
+<td>Homeomorphisms and topological invariants</td>
+<td><a href="scan55.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">57</td>
+<td>2/18</td>
+<td>Topological invariants; homotopies</td>
+<td><a href="scan56.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">58</td>
+<td>2/22</td>
+<td>Degree of a map; Brouwer fixed-point</td>
+<td><a href="scan57.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">59</td>
+<td>2/24</td>
+<td>Fundamental theorem of algebra; Ham sandwich theorem</td>
+<td><a href="scan58.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">60</td>
+<td>3/2</td>
+<td>Dirac's belt</td>
+<td><a href="scan59.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Topic 16: Foundations</td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">60</td>
+<td>3/2</td>
+<td>Computer-verified proofs; the Peano postulates</td>
+<td><a href="scan59.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">61</td>
+<td>3/4</td>
+<td>Dedekind cuts; countability</td>
+<td><a href="scan60.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">62</td>
+<td>3/15</td>
+<td>The diagonalization argument; orbit representatives</td>
+<td><a href="scan61.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">63</td>
+<td>3/17</td>
+<td>The Banach-Tarski paradox; existence of transcendental numbers</td>
+<td><a href="scan62.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">64</td>
+<td>3/21</td>
+<td>Irrationality of pi; Roth's theorem</td>
+<td><a href="scan63.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Topic 17: Graph theory</td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">65</td>
+<td>3/23</td>
+<td>Basic definitions; Ramsey's theorem</td>
+<td><a href="scan64.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">66</td>
+<td>3/25</td>
+<td>Hamiltonians; planarity; Dijkstra's algorithm</td>
+<td><a href="scan65.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">67</td>
+<td>3/30</td>
+<td>Travelling salesman problem; marriage problem</td>
+<td><a href="scan66.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">68</td>
+<td>4/1</td>
+<td>DNA sequencing; lower bounds on TSP; counting trees</td>
+<td><a href="scan67.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Topic 18: Complex analysis</td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">69</td>
+<td>4/5</td>
+<td>Complex versions of usual functions; conformal mapping</td>
+<td><a href="scan68.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Topic 19: Multivariable calculus</td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">70</td>
+<td>4/5</td>
+<td>A quick review of multivariable calculus</td>
+<td><a href="scan69.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">71</td>
+<td>4/7</td>
+<td>18.02 exam 1A</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">72</td>
+<td>4/11</td>
+<td>18.02 exam 2A</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">73</td>
+<td>4/13</td>
+<td>18.02 exam 3A, conservative fields</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">74</td>
+<td>4/18</td>
+<td>Line integrals, Green's theorem</td>
+<td><a href="scan70.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">75</td>
+<td>4/20</td>
+<td>Planimeter, Exam 3A</td>
+<td><a href="scan71.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">76</td>
+<td>4/22</td>
+<td>Green's theorem, Exam 3A</td>
+<td><a href="scan72.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">77</td>
+<td>4/25</td>
+<td>3D integrals, exam 4A</td>
+<td><a href="scan73.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">78</td>
+<td>4/27</td>
+<td>Stokes theorem</td>
+<td><a href="scan74.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">79</td>
+<td>4/29</td>
+<td>Finish calc review</td>
+<td><a href="scan75.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">80</td>
+<td>5/2</td>
+<td>Cauchy-Riemann equations</td>
+<td><a href="scan76.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">81</td>
+<td>5/4</td>
+<td>Huffman encoding, error-correcting codes</td>
+<td><a href="scan77.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">82</td>
+<td>5/6</td>
+<td>Residue theorem</td>
+<td><a href="scan78.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">83</td>
+<td>5/10</td>
+<td>More residue theorem</td>
+<td><a href="scan79.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">84</td>
+<td>5/12</td>
+<td>LaTeX</td>
+<td>(see Overleaf)</td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">85</td>
+<td>5/16</td>
+<td>Quaternions</td>
+<td><a href="scan80.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">86</td>
+<td>5/18-20</td>
+<td>Wallpaper groups</td>
+<td><a href="scan81.pdf">notes</a></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">87</td>
+<td>5/24</td>
+<td>Penrose tilings</td>
+<td><a href="scan82.pdf">notes</a></td>
+<td></td>
+</tr>
+
+
+<tr bgcolor="FFFFFF">
+<td align="center">88</td>
+<td>5/26</td>
+<td>Wrap-up, The zeta function</td>
+<td><a href="scan83.pdf">notes</a></td>
+<td></td>
+</tr>
+
+
+
+
+</table>
+
+
+<br /><br />
+
+<table cellpadding=1 border=1 cellspacing=0>
+    <tr>
+      <b>Upcoming topics (request more below!)</b>
+    </tr>
+    <tr>
+      <td>Abstract algebra (unsolvability of the quintic?)</td>
+    </tr>
+    <tr>
+      <td>Algebraic geometry (rational points?)</td>
+    </tr>
+    <tr>
+      <td>Complex analysis (some contour integrals?)</td>
+    </tr>
+    <tr>
+      <td>Numerical analysis</td>
+    </tr>
+    <tr>
+     <td>Calc III review</td>
+    </tr>
+        <tr>
+      <td>Hyperbolic geometry</td>
+    </tr>
+    <tr>
+      <td>Differential geometry (Gauss-Bonnet?)</td>
+    </tr>
+</table>
+
+<br><hr><br>
+Comments/requests?<br><br>
+<form method="post" action="http://personal.psu.edu/cgi-bin/formmail.cgi">
+  <input type=hidden name="recipient" value="jdl@psu.edu">
+  <input name="subject" value="MathTop2 web form" type="hidden">
+  Name (optional): <input name="name" type="text"><br>
+  Comment:<br> <textarea name="comment" rows="10" cols="80"></textarea><br>
+  <input name="spamcheck" type="text" class="spamcheck"><br>
+  <input type="submit" value="Submit">
+</form>
+
+
+</body></html>
+

@@ -1,0 +1,639 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Math 401, Spring 2020</title>
+  <link rel="stylesheet" type="text/css" href="../../css/course.css" media="screen" />
+<script src="index_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38900286-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+<h2>Math 401: Introduction to Analysis I</h2>
+<p>
+Instructor: John Lesieutre<br>
+Meetings: MWF 1:25-2:15 (now online)<br>
+Email: jdl@psu.edu<br>
+Office hours: Tu 2-3, F 12-1, on Zoom<br>
+</p>
+
+<p>
+Midterm2 will a take-home, roughly comparable in size to a homework.  It will be assigned 4/3 and due 4/10.  Submission will be on Gradescope.
+</p>
+
+<p>
+<b>Zoom info</b><br>
+Meeting ID: 814-441-5149<br>
+Link: <a href="https://psu.zoom.us/my/jdlpsu">https://psu.zoom.us/my/jdlpsu</a><br>
+Phone: (646) 876-9923<br>
+</p>
+
+<p>
+<a href="https://piazza.com/psu/spring2020/math401">Piazza discussions (and signup)</a><br><br>
+</p>
+
+<a href="syllabus.htm">Syllabus and course info</a><br>
+
+
+<br><a href="axioms.pdf">List of axioms</a><br>
+
+<br>
+Exam 1 was Friday 2/21 (covering chapters 1-4)
+<br><a href="pexam1.pdf">Practice test</a>, <a href="pexam1sol.pdf">solutions</a><br>
+
+
+
+
+<table cellpadding=1 border=1 cellspacing=0>
+<tr>
+<td align="center"><b>Lecture</b></td>
+<td align="center"><b>Date</b></td>
+<td align="center"><b>Topic</b></td>
+<td align="center"><b>Section</b></td>
+<td align="center"><b>Handouts</b></td>
+</tr>
+
+<br />
+
+<!-- Week 1 -->
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Week 1: Review of calculus</td>
+<td><a href="hw01.pdf">homework 1</a>, <a href="hwsol01.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">1</td>
+<td>1/13</td>
+<td>Introduction</td>
+<td>-</td>
+<td><a href="ws01.pdf">worksheet</a>, <a href="wssol01.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">2</td>
+<td>1/15</td>
+<td>More review, real numbers</td>
+<td>1.4-1.8</td>
+<td><a href="ws02.pdf">worksheet</a>, <a href="wssol02.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">3</td>
+<td>1/17</td>
+<td>More inequalities</td>
+<td>1.4-1.8</td>
+<td><a href="ws03.pdf">worksheet</a>, <a href="wssol03.pdf">solutions</a></td>
+</tr>
+
+<!-- Week 1 -->
+
+
+<!-- Week 2 -->
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Week 2: More real numbers. </td>
+<td><a href="hw02.pdf">homework 2</a>, <a href="hwsol02.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center"></td>
+<td>1/20</td>
+<td>MLK day: no class</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">4</td>
+<td>1/22</td>
+<td>Roots and irrationals</td>
+<td>1.9-1.11</td>
+<td><a href="ws04.pdf">worksheet</a>, <a href="wssol04.pdf">solutions</a></td>
+
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">5</td>
+<td>1/24</td>
+<td>Absolute value; triangle ineq</td>
+<td>1.11-1.14</td>
+<td><a href="ws05.pdf">worksheet</a>, <a href="wssol05.pdf">solutions</a></td>
+</tr>
+
+<!-- Week 2 -->
+
+
+<!-- Week 3 -->
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Week 3:</td>
+<td><a href="hw03.pdf">homework 3</a>, <a href="hwsol03.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">6</td>
+<td>1/27</td>
+<td>Set notation, bounds</td>
+<td>1.1</td>
+<td><a href="ws06.pdf">worksheet</a>, <a href="wssol06.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">7</td>
+<td>1/29</td>
+<td>Bounds, sup/inf</td>
+<td>2.1-2.9</td>
+<td><a href="ws07.pdf">worksheet</a>, <a href="wssol07.pdf">solutions</a></td>
+
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">8</td>
+<td>1/31</td>
+<td>Sup/inf</td>
+<td>2.11-3</td>
+<td><a href="ws08.pdf">worksheet</a>, <a href="wssol08.pdf">solutions</a></td>
+</tr>
+
+<!-- Week 3 -->
+
+
+<!-- Week 4 -->
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Week 4:</td>
+<td><a href="hw04.pdf">homework 4</a>, <a href="hwsol04.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">9</td>
+<td>2/3</td>
+<td>Induction</td>
+<td>3</td>
+<td><a href="ws09.pdf">worksheet</a>, <a href="wssol09.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">10</td>
+<td>2/5</td>
+<td>Sequences, convergence</td>
+<td>4.1-4.3</td>
+<td><a href="ws10.pdf">worksheet</a>, <a href="wssol10.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">11</td>
+<td>2/7</td>
+<td>Sequence theorems</td>
+<td>4.4-4.5</td>
+<td><a href="ws11.pdf">worksheet</a>, <a href="wssol11.pdf">solutions</a></td>
+</tr>
+
+<!-- Week 4 -->
+
+
+<!-- Week 5 -->
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Week 5:</td>
+<td><a href="hw05.pdf">homework 5</a>, <a href="hwsol05.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">12</td>
+<td>2/10</td>
+<td>Sequence theorems</td>
+<td>4.7-4.15</td>
+<td><a href="ws12.pdf">worksheet</a>, <a href="wssol12.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">13</td>
+<td>2/12</td>
+<td>Finishing sequences</td>
+<td>4</td>
+<td><a href="ws13.pdf">worksheet</a>, <a href="wssol13.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">14</td>
+<td>2/14</td>
+<td>Subsequences</td>
+<td>5</td>
+<td><a href="ws14.pdf">worksheet</a>, <a href="wssol14.pdf">solutions</a></td>
+</tr>
+
+<!-- Week 5 -->
+
+
+<!-- Week 6 -->
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Week 6:</td>
+<td><a href="hw06.pdf">homework 6</a>, <a href="hwsol06.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">15</td>
+<td>2/17</td>
+<td>Cauchy sequences</td>
+<td>5</td>
+<td><a href="ws15.pdf">worksheet</a>, <a href="wssol15.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">16</td>
+<td>2/19</td>
+<td>Exam review</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">17</td>
+<td>2/21</td>
+<td>Exam review</td>
+<td></td>
+<td></td>
+</tr>
+
+<!-- Week 6 -->
+
+
+<!-- Week 7 -->
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Week 7:</td>
+<td><a href="hw07.pdf">homework 7</a>, <a href="hwsol07.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">18</td>
+<td>2/24</td>
+<td>Cauchy sequences</td>
+<td>5</td>
+<td><a href="ws16.pdf">worksheet</a>, <a href="wssol16.pdf">solutions</a></t>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">19</td>
+<td>2/26</td>
+<td>Series</td>
+<td>6.1-6.7</td>
+<td><a href="ws17.pdf">worksheet</a>, <a href="wssol17.pdf">solutions</a></t>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">20</td>
+<td>2/28</td>
+<td>Series</td>
+<td>6.1-6.7</td>
+<td>(reused previous)</td>
+</tr>
+
+<!-- Week 7 -->
+
+
+<!-- Week 8 -->
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Week 8:</td>
+<td><a href="hw08.pdf">homework 8</a><!--, <a href="hwsol08.pdf">solutions</a>--></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">21</td>
+<td>3/2</td>
+<td>Series tests</td>
+<td>6.7-6.20</td>
+<td><a href="ws19.pdf">worksheet</a>, <a href="wssol19.pdf">solutions</a></t>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">22</td>
+<td>3/4</td>
+<td>Finish series</td>
+<td>6</td>
+<td><a href="ws20.pdf">worksheet</a>, <a href="wssol20.pdf">solutions</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">23</td>
+<td>3/6</td>
+<td>Finish series, for real</td>
+<td>6</td>
+<td><a href="ws21.pdf">worksheet</a>, <a href="wssol21.pdf">solutions</a></td>
+</tr>
+
+<!-- Week 8 -->
+
+
+<!-- Week 9 -->
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="4">Week 9: Spring break + moving online...</td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center"></td>
+<td>3/9</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center"></td>
+<td>3/11</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center"></td>
+<td>3/13</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<!-- Week 9 -->
+
+
+<!-- Week 10 -->
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="3">Week 10:</td>
+<td><a href="hw09.pdf">homework 9</a><!--, <a href="hwsol09.pdf">solutions</a>--></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">24</td>
+<td>3/16</td>
+<td>Functions</td>
+<td>7</td>
+<td><a href="ws22.pdf">worksheet</a>, <a href="wssol22.pdf">solutions</a>, <a href="slide22.pdf">slides</a>, <a href="https://psu.zoom.us/rec/share/3t0kLJbr9EJOXKP203rPZYQfF9-9X6a823BI-6UJyE0dKVVV8186sfNImWGKbrrF">recording</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">25</td>
+<td>3/18</td>
+<td>Functions and their limits</td>
+<td>8</td>
+<td><a href="ws23.pdf">worksheet</a>, <a href="wssol23.pdf">solutions</a>, <a href="slide23.pdf">slides</a>, <a href="./oops.txt">recording</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">26</td>
+<td>3/20</td>
+<td>Limits continued</td>
+<td>8</td>
+<td><a href="ws24.pdf">worksheet</a>, <a href="wssol24.pdf">solutions</a>, <a href="slide24.pdf">slides</a>, <a href="https://psu.zoom.us/rec/share/vtZFM63-9HJIfon1tFj8QKwiApnYT6a8hiQbrKVZzk-VHVghSAtc5YuBxz8gar8F">recording</a></td>
+</tr>
+
+<!-- Week 10 -->
+
+
+<!-- Week 11 -->
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="3">Week 11:</td>
+<td><a href="hw10.pdf">homework 10</a><!--, <a href="hwsol10.pdf">solutions</a>--></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">27</td>
+<td>3/23</td>
+<td>Continuity</td>
+<td>8</td>
+<td><a href="ws25.pdf">worksheet</a>, <a href="wssol25.pdf">solutions</a>, <a href="slide25.pdf">slides</a>, <a href="https://psu.zoom.us/rec/share/uZFNbOGprGBJYYXr4W79BIs-XaO-T6a8hyccqKFfmhv_RyEGDqoDUzz5hG7_VnHa">recording</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">28</td>
+<td>3/25</td>
+<td>Continuity on intervals</td>
+<td>9</td>
+<td><a href="ws26.pdf">worksheet</a>, <a href="wssol26.pdf">solutions</a>, <a href="slide26.pdf">slides</a>, <a href="https://psu.zoom.us/rec/share/75FcCKPd1W9LUs_o50PgQqQzA9X1T6a8gHUW_KYMyhx9if8Vb40S9DkOJUsKvqOX">recording</a></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">29</td>
+<td>3/27</td>
+<td>Intermediate value thm, etc</td>
+<td>9</td>
+<td><a href="ws27.pdf">worksheet</a>, <a href="wssol27.pdf">solutions</a>, <a href="slide27.pdf">slides</a>, <a href="https://psu.zoom.us/rec/share/_PVEILv0_H9LG6vnr3n_XKUQWd3reaa81SZIrKFYzUgiT5YdiuqYYGH6bgZZbX0p">recording</a></td>
+</tr>
+
+<!-- Week 11 -->
+
+
+<!-- Week 12 -->
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="4">Week 12:</td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">30</td>
+<td>3/30</td>
+<td>Derivatives</td>
+<td>10</td>
+<td><a href="ws28.pdf">worksheet</a>, <a href="wssol28.pdf">solutions</a>, <a href="slide28.pdf">slides</a></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">31</td>
+<td>4/1</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">32</td>
+<td>4/3</td>
+<td>MIDTERM EXAM 2</td>
+<td></td>
+<td></td>
+</tr>
+
+<!-- Week 12 -->
+
+
+<!-- Week 13 -->
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="4">Week 13:</td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">33</td>
+<td>4/6</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">34</td>
+<td>4/8</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">35</td>
+<td>4/10</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<!-- Week 13 -->
+
+
+<!-- Week 14 -->
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="4">Week 14:</td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">36</td>
+<td>4/13</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">37</td>
+<td>4/15</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">38</td>
+<td>4/17</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<!-- Week 14 -->
+
+
+<!-- Week 15 -->
+
+<tr bgcolor="DDDDDD">
+<td></td>
+<td colspan="4">Week 15:</td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">39</td>
+<td>4/20</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">40</td>
+<td>4/22</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="DDDDDD">
+<td align="center">41</td>
+<td>4/24</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<!-- Week 15 -->
+
+
+<!-- Week 16 -->
+
+<tr bgcolor="FFFFFF">
+<td></td>
+<td colspan="4">Week 16:</td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">42</td>
+<td>4/27</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">43</td>
+<td>4/29</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr bgcolor="FFFFFF">
+<td align="center">44</td>
+<td>5/1</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<!-- Week 16 -->
+
+</table>
+
+
+<br><hr><br>
+Comments/requests?<br><br>
+<form method="post" action="http://personal.psu.edu/cgi-bin/formmail.cgi">
+  <input type=hidden name="recipient" value="jdl@psu.edu">
+  <input name="subject" value="Math401 web form" type="hidden">
+  Name (optional): <input name="name" type="text"><br>
+  Comment:<br> <textarea name="comment" rows="10" cols="80"></textarea><br>
+  <input name="spamcheck" type="text" class="spamcheck"><br>
+  <input type="submit" value="Submit">
+</form>
+
+
+</body></html>
+

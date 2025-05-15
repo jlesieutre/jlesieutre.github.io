@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Knot Theory</title>
+  <link rel="stylesheet" href="styles.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Knot Theory</h1>
+</header>
+<h1 id="introduction">Introduction</h1>
+<p>Here is an alternating series rearranger:</p>
+<div class="sage">
+
+<script type="text/x-sage">
+
+
+
+
+
+
+# GO HERE: http://personal.psu.edu/jdl249/courses/topics2f22/analysis.htm
+
+# Set the target value and the number of terms to include.
+target = ln(2)
+numterms = 300
+
+# Set up variables storing next positive and negative term.
+current = 0
+pnext = 1
+nnext = 2
+
+# Start a list of the order to use each term.
+mylist = []
+
+# Figure out the order to add or subtract.
+for i in range(numterms):
+  if(current < target): # If our current sum is to small, use next +
+    mylist.append(pnext)
+    current += 1./pnext
+    pnext += 2
+    continue
+
+  if(current >= target): # If our current sum is too big, use next -
+    mylist.append(nnext)
+    current -= 1./nnext
+    nnext += 2
+
+# Now we've rearranged, and we just need to show our work.
+display_total = 0
+for current_term in mylist:
+
+  if(current_term % 2 == 1):
+    sign = "+"
+    display_total += 1./current_term
+  else:
+    sign = "-"
+    display_total -= 1./current_term
+
+  mystr = f"{sign}1/{current_term} = {display_total}"
+
+  print(mystr)
+
+
+</script>
+
+</div>
+</body>
+</html>

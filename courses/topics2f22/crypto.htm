@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cryptography</title>
+  <link rel="stylesheet" href="styles.css">
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Cryptography</h1>
+</header>
+<p>This first chapter deals with cryptography. The basic question is
+this: if you and a friend are communicating over a channel where anyone
+can eavesdrop, how can you still send secret messages? In this unit
+we’ll discuss two of the basic protocols that can be used:
+Diffie-Hellman key exchange, and the RSA algorithm. (We’ll probably come
+back later in the course and discuss some other cryptographic algorithms
+based on elliptic curves.)</p>
+<p>Here is your first challenge.</p>
+<div class="problem">
+<p><strong>Problem: </strong>Split into an even number of groups with
+1-3 students each, so that each group is paired with another group. Each
+group should have one member click the button below to generate a random
+5-digit integer.</p>
+<div class="sage">
+
+<script type="text/x-sage">
+
+ZZ.random_element(10000,99999)
+
+</script>
+
+</div>
+<p>Now, write a note on a piece of paper which helps your paired group
+figure out your 5-digit number. The hard part is this: the instructor is
+allowed to read your note, and you want the other group to be able to
+guess the message without the instructor figuring it out.</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>I’ve tried this challenge a few times.
+Some things that have worked:</p>
+<ul>
+<li>Refer to facts that would be known to your classmates, but not to me
+(somebody’s birthday, a 2020s pop culture reference,…)</li>
+<li>Write out the number (or an easy clue) in a language I don’t
+know.</li>
+<li>…</li>
+</ul>
+</div>
+<p>Now imagine we make the problem harder: you are trying to transmit a
+secret number to a stranger on the internet, and you should assume that
+anyone on the internet can read what you send. For example, maybe you’re
+sending your credit card number to an internet seller you haven’t dealt
+with before. You can’t rely on insider knowledge to transmit the secret
+(the recipient won’t have it) or foreign languages (since the
+eavesdropper might speak it, or at least have Google Translate). This
+problem sounds hopeless, but there are solutions using a little bit of
+number theory!</p>
+<h1 id="mathematical-introduction.">Mathematical introduction.</h1>
+<p>Many modern cryptographic methods rely on prime factorization.
+Factorization is an exmaple of a “trapdoor” function: it’s easy to
+multiply two numbers together (even if they’re really really big), but
+if you’re given a giant number and asked to factor it, this is
+essentially impossible even with a giant supercomputer.</p>
+<p>Before getting into the algorithm, we need to know a little bit of
+number theory. “<span class="math inline">\(a \bmod n\)</span>” just
+means the remainder when <span class="math inline">\(a\)</span> is
+divided by <span class="math inline">\(n\)</span>. It’s a number between
+<span class="math inline">\(0\)</span> and <span
+class="math inline">\(n-1\)</span>. When we write <span
+class="math inline">\(a \equiv b \bmod n\)</span>, this means that <span
+class="math inline">\(a \bmod n = b \bmod n\)</span>, i.e. that <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> yield the same remainder when divided
+by <span class="math inline">\(n\)</span>. This is equivalent to saying
+that <span class="math inline">\(a-b\)</span> is a multiple of <span
+class="math inline">\(n\)</span>.</p>
+<div class="problem">
+<p><strong>Problem: </strong>Compute <span class="math inline">\(173
+\bmod 13\)</span>. What was your method?</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>There are lots of ways to do this, the
+most direct being long division. I’m a little rusty, so I did it another
+way. I noticed that <span class="math inline">\(130\)</span> is a
+multiple of <span class="math inline">\(13\)</span>, which means that
+<span class="math inline">\(173 \equiv 173-130 = 43 \bmod 13\)</span>.
+Then <span class="math inline">\(43 \bmod 13\)</span> is easy to
+evaluate since the numbers aren’t so big. <span class="math inline">\(43
+= 3 \cdot 13 + 4\)</span>, so it’s <span
+class="math inline">\(4\)</span>.</p>
+</div>
+<p>An important fact is that applying <span class="math inline">\(\bmod
+n\)</span> respects addition and multiplication. In other words, if
+<span class="math inline">\(a \equiv x \mod n\)</span> and <span
+class="math inline">\(b \equiv y \bmod n\)</span>, then <span
+class="math inline">\(ab \equiv xy \bmod n\)</span>.</p>
+<div class="problem">
+<p><strong>Problem: </strong>What is this saying when <span
+class="math inline">\(n=10\)</span>?</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>Well, <span class="math inline">\(x \bmod
+10\)</span> is just the last digit of <span
+class="math inline">\(x\)</span> (in base <span
+class="math inline">\(10\)</span>). So it’s saying that if <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(x\)</span> have the same last digit and <span
+class="math inline">\(b\)</span> and <span
+class="math inline">\(y\)</span> have the same last digit, then <span
+class="math inline">\(ab\)</span> and <span
+class="math inline">\(xy\)</span> have the same last digit. That makes
+sense based on the rules for multiplication.</p>
+</div>
+<div class="problem">
+<p><strong>Problem: </strong>Can you explain why this works for all
+vales of <span class="math inline">\(n\)</span>? (Pick either addition
+or multiplication and try to figure out why this rule is valid.)</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>I pick multiplication. The fact that <span
+class="math inline">\(a \equiv x \bmod n\)</span> tells me that <span
+class="math inline">\(a-x \equiv 0 \bmod n\)</span>, which means that
+<span class="math inline">\(a-x\)</span> is a multiple of <span
+class="math inline">\(n\)</span>. So I can write <span
+class="math inline">\(a-x = kn\)</span> for some integer <span
+class="math inline">\(k\)</span>. Similarly, the fact that <span
+class="math inline">\(b \equiv y \bmod n\)</span> tells me that I can
+write <span class="math inline">\(b-y = \ell n\)</span> for some <span
+class="math inline">\(\ell\)</span>.</p>
+<p>Now I want to multiply them, and found out that the difference <span
+class="math inline">\(ax-by\)</span> is also a multiple of <span
+class="math inline">\(n\)</span>. Well, based on the above rules: <span
+class="math display">\[\begin{align*}
+ab - xy &amp;= ab - (a-kn)(b-\ell n) = ab - (ab - (k+\ell)n + k\ell n^2)
+= \left( (k+\ell)n + k) \right) n,
+\end{align*}\]</span> which is also a multiply of <span
+class="math inline">\(n\)</span>. This tells us that <span
+class="math inline">\(ab \equiv xy \bmod n\)</span>.</p>
+</div>
+<p>Taking exponentials <span class="math inline">\(\bmod n\)</span> also
+works well. And the good news is it can be computed pretty efficiently:
+to compute <span class="math inline">\(7^{42} \bmod 10\)</span>, we
+don’t actually have to compute <span
+class="math inline">\(7^{42}\)</span> (which is pretty big), and then
+take the result <span class="math inline">\(\bmod 10\)</span>: we can
+start with <span class="math inline">\(1\)</span> and keep multiplying
+by <span class="math inline">\(7\)</span> thirty-three times like you’d
+expect, but we can take the remainder <span class="math inline">\(\bmod
+10\)</span> at every step:</p>
+<table style="width:58%;">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 29%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>n</td>
+<td>7^n </td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>In this case, we can spot a pattern: the values of <span
+class="math inline">\(7^n \bmod 10\)</span> are repeating for every four
+values of <span class="math inline">\(n\)</span>. We can use this to
+figure out the value of <span class="math inline">\(7^{42} \bmod
+10\)</span>; since <span class="math inline">\(42\)</span> is two more
+than a multiple of <span class="math inline">\(4\)</span> (i.e. <span
+class="math inline">\(42 \equiv 2 \bmod 4\)</span>), we can see that
+<span class="math inline">\(7^{42} \equiv 9 \bmod 10\)</span>.</p>
+<p>A direct calculation would have given <span class="math display">\[
+7^{42} = 311973482284542371301330321821976049,
+\]</span> so we got the right answer, while sidestepping the
+scary-looking numbers.</p>
+<p>However, we got a little lucky here, in that the values of <span
+class="math inline">\(7^k \bmod 10\)</span> started repeating very
+quickly, and we were able to spot it. With a value of <span
+class="math inline">\(n\)</span> larger than <span
+class="math inline">\(10\)</span>, this wouldn’t have been possible.</p>
+<p>Nevertheless, a computer can very quickly compute the value of <span
+class="math inline">\(a^b \bmod n\)</span>, even when <span
+class="math inline">\(a\)</span>, <span
+class="math inline">\(b\)</span>, and <span
+class="math inline">\(n\)</span> are gigantic.</p>
+<p>Here’s a demonstration in Sage: see how big the numbers can be before
+you start to run in trouble. And that’s just a free web service!</p>
+<div class="sage">
+
+<script type="text/x-sage">
+
+power_mod(7,42,10)
+
+</script>
+
+</div>
+<p>It doesn’t do it by multiplying <span
+class="math inline">\(a\)</span> by itself <span
+class="math inline">\(b\)</span> times and taking the remainder <span
+class="math inline">\(\bmod n\)</span> each time: there’s a trick
+instead.</p>
+<p>Here’s what we do. We make a list of just the values of <span
+class="math inline">\(7^k \bmod 10\)</span> when <span
+class="math inline">\(k\)</span> is a power of <span
+class="math inline">\(2\)</span>. This is actually pretty easy, since
+for example <span class="math display">\[
+7^{32} \bmod 10 = 7^{16} \cdot 7^{16} \bmod 10 = (7^{16})^2 \bmod 10
+\]</span></p>
+<p>n 7^k 1 7 2 9 4 1 8 1 16 1 32 1 64 1</p>
+<p>Each line of the table is obtained by squaring the previous line and
+taking the result <span class="math inline">\(\bmod 10\)</span>. (Once
+again there is an obvious pattern here, but only because I’m using such
+small numbers.)</p>
+<p>Now, this doesn’t look so useful: we’re supposed to compute <span
+class="math inline">\(7^{42} \bmod 10\)</span>, and <span
+class="math inline">\(42\)</span> isn’t a power of <span
+class="math inline">\(2\)</span>, so the number we’re after is nowhere
+to be found in this list. However, we can work it out using just the
+numbers in the list: <span class="math display">\[
+7^{42} \bmod 10 = 7^{32+8+2} \bmod 10 = 7^{32} \cdot 7^8 \cdot 7^2 \bmod
+10 = 1 \cdot 1 \cdot 9 = 9 \bmod 10.
+\]</span></p>
+<p>The magic here is that we were able to write <span
+class="math inline">\(42 = 32 + 8 + 2\)</span> as a sum of powers of
+two, which were the values in our table. But every number can be written
+as a sum of powers of two, and this is something you already know how to
+do! It’s tantamount to writing the exponent in binary!</p>
+<div class="problem">
+<p><strong>Problem: </strong>Compute <span class="math inline">\(17^{65}
+\bmod 103\)</span>.</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>TODO</p>
+</div>
+<div class="problem">
+<p><strong>Problem: </strong>Computing <span class="math inline">\(a^b
+\bmod n\)</span> by the “naive” method would require doing <span
+class="math inline">\(b\)</span> mod-<span
+class="math inline">\(n\)</span>, multiplications, which would take a
+pretty long time if <span class="math inline">\(b\)</span> is big. How
+many mod-<span class="math inline">\(n\)</span> multiplications are
+required in this method?</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>The first thing we had to do was to make a
+list of list of <span class="math inline">\(a\)</span> raised to all
+powers of <span class="math inline">\(2\)</span> up to <span
+class="math inline">\(b\)</span>. There are about <span
+class="math inline">\(\log_2 b\)</span> such things. Computing each of
+those took just one multiplication.</p>
+<p>Then we had to take a binary expansion and multiply some things
+together. Again the number of operations is about <span
+class="math inline">\(\log_2 b\)</span>. So we’re taking about <span
+class="math inline">\(\log_2 b\)</span> steps compared to <span
+class="math inline">\(b\)</span> if we did it the obvious way; that’s a
+pretty big speed-up.</p>
+</div>
+<p>This trick is called “exponentiation by repeated squaring”. It’s not
+the last we’ll see of it.</p>
+<h1 id="diffie-hellman-key-exchange">Diffie-Hellman key exchange</h1>
+<h2 id="the-algorithm">The algorithm</h2>
+<p>The first algorithm we’ll discuss is the Diffie–Hellman key exchange
+algorithm. This algorithm doesn’t actually encrypt a message, but it can
+be the first step in doing so.</p>
+<p>Here’s how it works. Two friends, inevitably named Alice and Bob (A
+and B, get it?) want to establish a shared secret key that is known to
+both of them but not to anyone else. This is made difficult by the fact
+that all of their communications are publicly viewable.</p>
+<p>First, Alice and Bob agree on a (large) prime number <span
+class="math inline">\(p\)</span> and another number <span
+class="math inline">\(g \bmod p\)</span>. They do this publicly and
+without subterfuge, so anybody eavesdropping knows the values of <span
+class="math inline">\(p\)</span> and <span
+class="math inline">\(g\)</span>.</p>
+<p>You might worry that finding large prime numbers is hard. To have
+reasonable security against a very sophisticated nemesis, you might want
+a prime with 400 or 500 digits, and finding primes in this range isn’t a
+big deal. The largest prime number at time of writing (2022) has about
+25,000,000 digits. We can talk some other time about how to do this, if
+you want.</p>
+<p>Now, Alice picks a secret key, <span
+class="math inline">\(x\)</span>, and Bob picks a secret key, <span
+class="math inline">\(y\)</span>. Alice computes the power <span
+class="math display">\[
+A = g^x \bmod p
+\]</span> and Bob computes <span class="math display">\[
+B = g^y \bmod p.
+\]</span> Then they exchange these numbers: Alice sends <span
+class="math inline">\(A\)</span> to Bob, and Bob sends <span
+class="math inline">\(B\)</span> to Alice. But they do not send their
+secret numbers <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>!</p>
+<p>After he receives <span class="math display">\[A\]</span> from Alice,
+Bob computes the key <span class="math display">\[
+K_B = A^y \bmod p,
+\]</span> and Alice computes <span class="math display">\[
+K_A = B^x \bmod p.
+\]</span> These two numbers are actually the same thing, since: <span
+class="math display">\[
+K_A = B^x \bmod p = (g^y)^x \bmod p = (g^x)^y \bmod p = A^y \bmod p =
+K_B.
+\]</span> That number <span class="math inline">\(K\)</span> is the
+secret key shared by Alice and Bob.</p>
+<h2 id="security">Security</h2>
+<p>Why is this safe? Why couldn’t an eavesdropper figure out the value
+of <span class="math inline">\(K\)</span>? Well, consider which numbers
+the eavesdropper actually knows: the numbers that have been publicly
+transmitted are <span class="math inline">\(p\)</span>, <span
+class="math inline">\(g\)</span>, <span
+class="math inline">\(A\)</span>, and <span
+class="math inline">\(B\)</span>. This is not in itself enough
+information to figure out <span class="math inline">\(K\)</span>, since
+they don’t know the values of the secret numbers <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>.</p>
+<p>What could the eavesdropper do? If the eavesdropper could figure out
+the value of <span class="math inline">\(x\)</span> or <span
+class="math inline">\(y\)</span>, the whole scheme would be busted. And
+the eavesdropper does a priori have enough information to do this: she
+knows that <span class="math inline">\(A = g^x \bmod p\)</span>, and
+should could simply start trying every conceivable value of <span
+class="math inline">\(x\)</span> until she finds the one that satisfies
+<span class="math inline">\(A = g^x \bmod p\)</span>. But trying every
+value of <span class="math inline">\(x\)</span> would take a really long
+time; think about the <code>for</code> loop that would be required. It
+would have to check up to <span class="math inline">\(n\)</span> things,
+where <span class="math inline">\(n\)</span> might have a couple hundred
+digits. On my laptop, even running an empty <code>for</code> loop of
+<span class="math inline">\(10^{10}\)</span> things takes a long time.
+So it is very difficult to figure out the key.</p>
+<p>The security of the Diffie-Hellman algorithm relies on the hardness
+of the Discrete Logarithm Problem (DLP). The problem is this: if one
+knows the values of <span class="math inline">\(a\)</span>, <span
+class="math inline">\(k\)</span>, <span
+class="math inline">\(n\)</span>, and one knows that <span
+class="math inline">\(a^b \equiv k \bmod n\)</span>, how can one find
+the value of <span class="math inline">\(k\)</span>? (The name is
+suggestive of the fact that this is analogous to taking a regular old
+logarithm: if you want to solve <span class="math inline">\(a^b =
+k\)</span>, the answer would just be <span class="math inline">\(k =
+\log_a b\)</span>. The “discrete” comes in since we’re sticking to
+integers and working <span class="math inline">\(\bmod n\)</span>
+instead of with real numbers.) There is no good algorithm known to
+quickly solve this problem, at least on a classical computer. (On a
+quantum computer, there is such an algorithm: a form of Shor’s algorithm
+can quickly solve the discrete logarithm problem. If you are trying to
+keep a secret from the NSA and you think they might have quantum
+computers by now, you probably should pick a different cryptographic
+scheme.)</p>
+<h2 id="next-steps">Next steps</h2>
+<p>Alice and Bob have agreed on a key, but what they actually wanted was
+to send encrypted messages. A class of algorithms called “symmetric key
+encryption” will let them do this.</p>
+<p>The simplest option would be to use their key as a “one-time pad”.
+First, Alice and Bob rewrite their key <span
+class="math inline">\(K\)</span> as a binary string. If Alice has a
+message message she wants to send, she encodes it as a binary string
+(using ASCII, for example) <span class="math inline">\(M\)</span>. Then
+she computes <span class="math inline">\(E = M \oplus K\)</span>, where
+the “<span class="math inline">\(\oplus\)</span>” here means to do
+addition in binary, but without any carrying.</p>
+<p>Alice then sends the encrypted message <span
+class="math inline">\(E\)</span> to Bob. How does he recover the <span
+class="math inline">\(M\)</span> that Alice started with? Well, he
+already knows <span class="math inline">\(K\)</span> and so can just do
+the addition <span class="math inline">\(M = E \oplus K\)</span>.</p>
+<p>The downside of this method is that Alice and Bob would either need a
+very long key (with more bits than all the messages they plan to
+exchange), or they would need to reuse a short key again and again. The
+former would be computationally very expensive (imagine trying to
+encrypt a 10 MB jpeg file this way – you would need millions of bits of
+key), while the latter would not be entirely secure. There are
+alternative algorithms that will get a little more mileage out a single
+key than a one-time pad can and so save Alice and Bob the trouble of
+generating a lot of shared secret bits. One algorithm that’s popular in
+practice is AES.</p>
+<p>To see why repeating a short key would be insecure, think about an
+extreme case: what if <span class="math inline">\(K\)</span> is just an
+offset, and the message is encrypted by offsetting each letter by <span
+class="math inline">\(K\)</span>? This is called a Caesar cipher. To
+send a message that’s a single character this is fine, but if you’re
+sending a long message it could easily be broken by an attacker who
+simply tries every possible offset until the text makes sense!</p>
+<div class="problem">
+<p><strong>Problem: </strong>Use the implementation in
+“diffie-hellman.sagews” on CoCalc to send a message to a friend. Did it
+work? How long a key did you use?</p>
+</div>
+<h1 id="rsa">RSA</h1>
+<p>The RSA algorithm (named for its creators, Rivest–Shamir–Adleman),
+works a bit differently from Diffie-Hellman key exchange. It is a
+“public-key” cryptosystem, and functions a little differently.</p>
+<p>To begin, everyone who wants to be able to receive messages needs to
+generate a key. The key has two parts: a public key, which is posted for
+anyone to see, and a private key, known only to the person who generated
+it. Suppose that Alice wants to send a message to Bob. To encrypt the
+message, Alice does some computations using Bob’s public key, which she
+can look up anywhere. But decrypting the resulting ciphertext is
+possible only for a person who knows bob’s private key (hopefully only
+Bob).</p>
+<p>This arrangement can have some advantages: for example, suppose you
+are a credit card processor, who will want to receive encrypted credit
+card numbers from stores around the world. You might not want to set up
+a shared key with every store in the world in order to receive messages
+from them, like you would need to with Diffie-Hellman. Instead, you
+simply publish your public key, and any store who wants to submit
+private information to you can encrypt it using that key.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Rather than being based on the hardness of the discrete log problem,
+the security of RSA relies on the hardness of prime factorization. The
+mathematical prerequistes are a little different.</p>
+<p>The <em>greatest common divisor</em> (gcd) of two integers <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> is the largest integer <span
+class="math inline">\(g\)</span> that divides both of them. For example,
+<span class="math inline">\(\gcd(24,40) = 8\)</span>, since <span
+class="math inline">\(8\)</span> divides both of those numbers, and
+nothing larger than <span class="math inline">\(8\)</span> divides both
+of them.</p>
+<div class="problem">
+<p><strong>Problem: </strong>Compute <span
+class="math inline">\(gcd(340,500)\)</span>.</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>One way you might have learned to do this
+in the past is by prime factorization: <span
+class="math display">\[\begin{align*}
+340 &amp;= 2^2 \cdot 5^1 \cdot 17^1 \\
+500 &amp;= 2^2 \cdot 5^3
+\end{align*}\]</span> Then to get the <span
+class="math inline">\(\gcd\)</span>, you multiply together each prime
+that appears, raised to the smallest power ever seen: <span
+class="math display">\[
+\gcd(340,500) = 2^2 \cdot 5^1 \cdot 17^0 = 20.
+\]</span> This works, but it’s not very practical when the numbers are
+big. The issue is that finding the prime factorization of a number with
+<span class="math inline">\(500\)</span> digits is simply not possible
+with modern technology. There is fortunately another algorithm, the
+Euclidean algorithm, that can compute <span
+class="math inline">\(\gcd(a,b)\)</span> much faster, even when the
+nubers involved are gigantic.</p>
+</div>
+<p>Two numbers <span class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> are said to be <em>coprime</em> if
+<span class="math inline">\(\gcd(a,b) = 1\)</span>, so there is no
+integer bigger than <span class="math inline">\(1\)</span> that divides
+both of them. An important function which shows up in the development of
+RSA is the Euler <span class="math inline">\(\phi\)</span> function,
+also called the <em>totient</em>. It’s defined to be the numbers of
+integers less than <span class="math inline">\(n\)</span> which are
+coprime to it. <span class="math display">\[
+\phi(n) = \# \{ 1 \leq k \leq n : \text{$k$ is coprime to $n$} \}
+\]</span></p>
+<p>For example, <span class="math inline">\(\phi(10) = 4\)</span>,
+because there are <span class="math inline">\(4\)</span> integers less
+than <span class="math inline">\(10\)</span> and coprime to <span
+class="math inline">\(10\)</span>: they are <span
+class="math inline">\(1\)</span>, <span
+class="math inline">\(3\)</span>, <span
+class="math inline">\(7\)</span>, and <span
+class="math inline">\(9\)</span>.</p>
+<div class="problem">
+<p><strong>Problem: </strong>What is <span
+class="math inline">\(\phi(12)\)</span>?</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>The numbers less than <span
+class="math inline">\(12\)</span> and coprime to it are <span
+class="math inline">\(1\)</span>, <span class="math inline">\(5\)</span>
+,<span class="math inline">\(7\)</span> , and <span
+class="math inline">\(11\)</span>. So we obtain <span
+class="math inline">\(\phi(12) = 4\)</span>.</p>
+</div>
+<div class="problem">
+<p><strong>Problem: </strong>What is <span
+class="math inline">\(\phi(13)\)</span>? Can you generalize this?</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>Every number from <span
+class="math inline">\(1\)</span> to <span
+class="math inline">\(12\)</span> is coprime to <span
+class="math inline">\(13\)</span>, and so <span
+class="math inline">\(\phi(13) = 12\)</span>. The same thing works for
+any prime number: we have <span class="math inline">\(\phi(p) =
+p-1\)</span>.</p>
+</div>
+<div class="problem">
+<p><strong>Problem: </strong>Suppose that <span
+class="math inline">\(p\)</span> and <span
+class="math inline">\(q\)</span> are two prime numbers. What is <span
+class="math inline">\(\phi(pq)\)</span>? (The answer is important for
+RSA.) Hint: try picking two modestly sized <span
+class="math inline">\(p\)</span> and <span
+class="math inline">\(q\)</span> as an example. Write all the numbers
+from <span class="math inline">\(1\)</span> to <span
+class="math inline">\(pq\)</span> down in a <span
+class="math inline">\(p \times q\)</span> grid. Circle the ones that
+<em>aren’t</em> coprime to <span class="math inline">\(pq\)</span>. Can
+you spot a pattern?</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong><span class="math inline">\(\phi(pq) =
+(p-1)(q-1)\)</span>.</p>
+</div>
+<p>An important fact, which I’m not going to prove, is that if <span
+class="math inline">\(b\)</span> and <span
+class="math inline">\(n\)</span> are coprime, there is always a unique
+value of <span class="math inline">\(a\)</span> with <span
+class="math inline">\(0 \leq a &lt; n\)</span> for which <span
+class="math inline">\(ab \equiv 1 \bmod n\)</span>. This value of <span
+class="math inline">\(a\)</span> is called the “inverse of <span
+class="math inline">\(b\)</span> modulo <span
+class="math inline">\(n\)</span>”.</p>
+<div class="problem">
+<p><strong>Problem: </strong>Find the inverse of <span
+class="math inline">\(12\)</span> modulo <span
+class="math inline">\(25\)</span>.</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>What we are looking for as an integer
+<span class="math inline">\(b\)</span> so that <span
+class="math inline">\(12b \equiv 1 1 \bmod 25\)</span>. According to
+what I claimed, such a <span class="math inline">\(b\)</span> must
+exist. One way to find this <span class="math inline">\(b\)</span> is to
+simply test every possible value:</p>
+<table style="width:76%;">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>b</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td>12b mod 25</td>
+<td>12</td>
+<td>24</td>
+<td>11</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>You could keep going until you find the answer, but I’m going to
+notice a shortcut here. We see that <span class="math inline">\(12 \cdot
+2 = 24 \equiv -1 \bmod 25\)</span>. That means that <span
+class="math inline">\(12 \cdot (-2) \equiv 1 \bmod 25\)</span>. Since
+<span class="math inline">\(-2 \equiv 23 \bmod 25\)</span>, our answer
+is <span class="math inline">\(b = 23\)</span>.</p>
+<p>In practice, this brute-force approach is not the method that would
+be used to find the inverse of <span class="math inline">\(a\)</span>
+modulo <span class="math inline">\(n\)</span>; there is a way to do this
+very quickly using the Euclidean algorithm. Again, we will leave the
+computational dirty work to the machines in this case.</p>
+</div>
+<p>Before stating the RSA algorithm, we need our first serious theorem,
+Fermat’s Little Theorem.</p>
+<div class="Theorem">
+<p>Suppose that <span class="math inline">\(b\)</span> and <span
+class="math inline">\(n\)</span> are positive and coprime. Then <span
+class="math inline">\(b^{\phi(n)} \equiv 1 \bmod n\)</span>.</p>
+</div>
+<p>This is especially useful when <span class="math inline">\(n\)</span>
+is a prime number, although in RSA we need a bit more.</p>
+<p>These notes tend to go very light on proofs, but this is one where I
+think it’s worth it. After all, you’re relying on Fermat’s Little
+Theorem every time you check your email; let’s make sure we know why it
+works.</p>
+<p>Here’s a warm up case. Let’s think about what happens when <span
+class="math inline">\(n=10\)</span> and <span class="math inline">\(b =
+3\)</span>. To start, we make a list of all the numbers less than <span
+class="math inline">\(10\)</span> but coprime to <span
+class="math inline">\(10\)</span>. TODO: finish the proof. (We worked
+through it in class.)</p>
+<p>Now for the RSA algorithm, which puts this into practice. Here’s what
+RSA does for us, which is solving a slightly different problem than
+Diffie-Hellman did. Imagine that one person or company wants to be able
+to receive many encrypted messages, from anyone, even people they don’t
+know. You might imagine that the company is a credit card processor:
+they want to receive encoded messages from anywhere, even people with
+whom they haven’t generated keys ahead of time.</p>
+<p>First, the person who will receive the encrypted messages generates a
+key as follows. Let’s call this party Alice.</p>
+<ol type="1">
+<li><p>Choose two prime numbers <span class="math inline">\(p\)</span>
+and <span class="math inline">\(q\)</span>. These should be quite big;
+in practice, maybe 100 digits each.</p></li>
+<li><p>Compute the products <span class="math inline">\(n = pq\)</span>
+and <span class="math inline">\(\phi(n) = (p-1)(q-1)\)</span>. Notice
+that even when <span class="math inline">\(p\)</span> and <span
+class="math inline">\(q\)</span> are gigantic, multiplying them isn’t
+very hard, so this will go fast.</p></li>
+<li><p>Choose a encryption key <span class="math inline">\(e\)</span>,
+and then compute the inverse of <span class="math inline">\(e\)</span>
+modulo <span class="math inline">\(\phi(n)\)</span>, obtaining an
+encryption key <span class="math inline">\(d\)</span> that makes <span
+class="math inline">\(de \equiv 1 \pmod \phi(n)\)</span>. It isn’t
+terribly important what number you use for <span
+class="math inline">\(e\)</span>; your favorite number is fine. (A
+popular choice is <span class="math inline">\(e 65537 =
+2^{16}+1\)</span>, since part of the algorithm involves raising
+something to the <span class="math inline">\(e\)</span> power, and for
+something one more than a power of <span
+class="math inline">\(2\)</span> this goes very fast with repeated
+squaring).</p></li>
+<li><p>Now, share the public key <span
+class="math inline">\((n,e)\)</span>. These numbers should be posted in
+a place that anyone who wants to send a message can find them. The
+number <span class="math inline">\(d\)</span> is the private key and
+must be kept secret. The numbers <span class="math inline">\(p\)</span>
+and <span class="math inline">\(q\)</span> won’t be needed again, and
+you can just forget them!</p></li>
+</ol>
+<p>Now, suppose that Bob wants to send a message to Alice. He first
+encodes his message as a number <span class="math inline">\(M\)</span>
+(say by writing it in ASCII and interpreting it as a binary number). The
+message <span class="math inline">\(M\)</span> needs to be less than
+<span class="math inline">\(n\)</span> for this to work; if you’re
+trying to send a really long message, you could consider splitting it
+up, or combining this with a different algorithm.</p>
+<p>Bob encrypts his message by computing <span class="math inline">\(E =
+M^e \pmod n\)</span>. This seems daunting: we’re looking at numbers with
+a couple hundred digits each here. But remember that you don’t actually
+need to compute <span class="math inline">\(M^e\)</span> – which is
+truly gigantic – with fast exponentiation, this will only take about
+<span class="math inline">\(\log_2 d\)</span> multiplications, which is
+just a couple hundred steps! Now, Bob sends <span
+class="math inline">\(E\)</span> to Alice.</p>
+<p>Alice receives the number <span class="math inline">\(E\)</span> from
+Bob, and now can decrypt it by computing <span class="math inline">\(E^d
+\pmod n\)</span>. Why does this work? Well, remember that <span
+class="math inline">\(de \equiv 1 \pmod \phi(n)\)</span>, which means
+that the product <span class="math inline">\(de\)</span> is <span
+class="math inline">\(1\)</span> more than a multiple of <span
+class="math inline">\(\phi(n)\)</span>. We can call that multiple <span
+class="math inline">\(k \, \phi(n)\)</span>, where <span
+class="math inline">\(k\)</span> is some appropriate integer, so <span
+class="math inline">\(de = k \phi(n) + 1\)</span>.</p>
+<p><span class="math display">\[
+E^d \pmod n \equiv (M^e)^d \pmod n \equiv M^{de} \pmod n \equiv M^{k
+\phi(n)  +1} \pmod n \equiv (M^{\phi(n)})^k M^1 \pmod n = 1^k M^1 \pmod
+n = M.
+\]</span></p>
+<p>So Alice can recover the message!</p>
+<div class="problem">
+<p><strong>Problem: </strong>Generate a public key, and share it with
+another group. Now use this to send them your favorite 5-digit number.
+Did it work?</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>Hopefully it worked.</p>
+</div>
+<div class="problem">
+<p><strong>Problem: </strong>How could you send a longer message using
+RSA?</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>One option would be to just cut it into
+shorter messages, say 30-character-long blocks, and send those one by
+one.</p>
+<p>Another, more common in practice nowadays, would be to generate a
+random key, and then send that as a message encrypted with RSA. Then
+this key can be used in the same sort of way as Diffie-Hellman, for
+example in combination with AES.</p>
+</div>
+<p>Let’s think about how secure this is. An eavesdropper would know the
+public key numbers <span class="math inline">\(n\)</span> and <span
+class="math inline">\(e\)</span>, as well as the intercepted encrypted
+message <span class="math inline">\(E\)</span>. To decrypt the message,
+they would need to compute <span class="math inline">\(M = E^d \pmod
+n\)</span>, for which they need to know <span
+class="math inline">\(d\)</span>. In principle, <span
+class="math inline">\(d\)</span> can be computed from the existing
+data:</p>
+<h2 id="real-world-use">Real world use</h2>
+<p>Diffie-Hellman key exchange is part of the TLS protocol for email.
+RSA is mostly used for key exchanges, is my understanding.</p>
+<p>Although RSA can be used to encrypt a message, it is relatively slow
+and so not often used for this purpose. Instead, RSA is usually used to
+generate a shared key, which is then used in a faster algorithm
+like.</p>
+<p>TODO: Add some notes about side channel attacks.</p>
+<p>TODO: Something about quantum computers?</p>
+<h1 id="references">References</h1>
+<p><a
+href="https://cacm.acm.org/magazines/2019/1/233523-imperfect-forward-secrecy/fulltext">Problems
+with Diffie-Hellman in practice</a></p>
+<p><a href="https://blog.trailofbits.com/2019/07/08/fuck-rsa/">Problems
+with RSA in practice</a></p>
+</body>
+</html>

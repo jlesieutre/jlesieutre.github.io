@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Computational linear algebra</title>
+  <link rel="stylesheet" href="styles.css">
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Computational linear algebra</h1>
+</header>
+<p>This chapter is a first introduction to linear algebra, from a
+computational point of view. The basic problem is this: let’s say we
+have a bunch of linear equations in several variables, something
+like</p>
+<p><span class="math display">\[\begin{align*}
+2x + y - z &amp;= -4 \\
+x + 2y + z &amp;= 1 \\
+-x + y + z &amp;= 0
+\end{align*}\]</span></p>
+<p>Although you probably could probably solve this directly by
+eliminating the variables one by one, it would be a bit of a hassle, and
+with many more variables than this it would quickly become prohibitively
+complicated. Our first step is to translate the problem into the
+language of matrices. This will have two advantages: a) it makes the
+bookkeeping easier and b) it makes the problem more amenable to a
+general algorithm. In real life, you might want to solve systems of
+thousands of equations in thousands of variables, and the algorithm
+makes this possible.</p>
+<p>The first step is to form a matrix by simply writing the coefficients
+from the linear system in a grid. We include the values from the
+right-hand-sides of the equations in a final column on the right.</p>
+<p><span class="math display">\[
+\left(\begin{array}{rrr|l}
+2 &amp; 1 &amp; -1 &amp; -4 \\
+1 &amp; 2 &amp; 1 &amp; 1 \\
+-1 &amp; 1 &amp; 1 &amp; 0
+\end{array}\right)
+\]</span></p>
+<p>This arrangement is called the <em>augmented matrix</em> for the
+linear system.</p>
+<p>Now, if you were trying to solve the equation by hand, what would you
+do? You’d try to solve for the variables one at a time, by taking one of
+the equations and eliminating the other variables from it. For example,
+you might try subtracting <span class="math inline">\(2\)</span> times
+the second equation from the first equation, which would eliminate the
+variable <span class="math inline">\(x\)</span> from the first equation.
+Doing this (while changing the first equation, but leaving the second
+equation in our list unchanged) would yield a new system of
+equations:</p>
+<p><span class="math display">\[\begin{align*}
+0 -3 y - 3z &amp;= -6 \\
+x + 2y + z &amp;= 1 \\
+-x + y + z &amp;= 0
+\end{align*}\]</span></p>
+<p>The corresponding augmented matrix for this new system would be:</p>
+<p><span class="math display">\[
+\left(\begin{array}{rrr|l}
+0 &amp; -3 &amp; -3 &amp; -6 \\
+1 &amp; 2 &amp; 1 &amp; 1 \\
+-1 &amp; 1 &amp; 1 &amp; 0
+\end{array}\right).
+\]</span></p>
+<p>What happened? Our simple algebraic maneuvre corresponded to an
+equally simple modification to the augmented matrix: we added <span
+class="math inline">\(-2\)</span> times the second row to the first
+row.</p>
+<p>To solve the system of linear equations, we will keep doing something
+similar. We apply three “elementary row operations” to our matrix until
+it’s reduced to a form where we can see the solution of the system of
+equations. Here are the legal operations:</p>
+<ol type="1">
+<li>Add a multiple of a row to another row.</li>
+<li>Multiply a row by a number.</li>
+<li>Exchange two rows.</li>
+</ol>
+<p>These correspond, respectively, to algebraic operations of:</p>
+<ol type="1">
+<li>Adding a multiple of one equation to another equation (to eliminate
+a variable, perhaps)</li>
+<li>Multiplying an equation by a constant.</li>
+<li>Re-ordering the equations.</li>
+</ol>
+<p>Let’s try to solve a whole system of equations this way. We aren’t
+really doing anything differently from the method you would use
+otherwise, but the matrix format makes it easier to keep track of
+everything.</p>
+<div class="problem">
+<p><strong>Problem: </strong>Solve the following system for <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>: <span
+class="math display">\[\begin{align*}
+2x + y &amp;= 1 \\
+-x + y &amp;= 3
+\end{align*}\]</span></p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>First, we express the system in augmented
+matrix form: <span class="math display">\[\begin{align*}
+\left(\begin{array}{rr|l}
+2 &amp; 1 &amp; 1 \\
+-1 &amp; 1 &amp; 3
+\end{array}\right).
+\end{align*}\]</span></p>
+<p>Now we start doing elementary row operations. The goal is to solve
+for the variables one-by-one; let me show you one way to do it. There’s
+always more than one way to do these, just like there’s more than one
+way to solve it algebraically.</p>
+<p><span class="math display">\[
+\left(\begin{array}{rr|l}
+2 &amp; 1 &amp; 1 \\
+-1 &amp; 1 &amp; 3
+\end{array}\right)
+\]</span></p>
+<p>Add <span class="math inline">\(-1\)</span> times second row to first
+row.</p>
+<p><span class="math display">\[
+\left(\begin{array}{rr|l}
+3 &amp; 0 &amp; -2 \\
+-1 &amp; 1 &amp; 3
+\end{array}\right)
+\]</span></p>
+<p>Multiply first row by <span class="math inline">\(\frac
+13\)</span></p>
+<p><span class="math display">\[
+\left(\begin{array}{rr|l}
+1 &amp; 0 &amp; -\frac 23 \\
+-1 &amp; 1 &amp; 3
+\end{array}\right)
+\]</span></p>
+<p>Add <span class="math inline">\(1\)</span> times first equation to
+second.</p>
+<p><span class="math display">\[
+\left(\begin{array}{rr|l}
+1 &amp; 0 &amp; -\frac 23 \\
+0 &amp; 1 &amp; \frac 73
+\end{array}\right)
+\]</span></p>
+<p>You’ll notice that I’ve chosen the row operations to make the left
+part of this the <span class="math inline">\(2 \times 2\)</span>
+identity matrix. Why? Well, remember that at each step the augmented
+matrix still encodes a system of linear equations; it’s just a shorthand
+way to write them. And what equations do we have now? It says</p>
+<p><span class="math display">\[\begin{align*}
+1x + 0y &amp;= -\frac 23 \\
+0x + 1y &amp;= \frac 73 \\
+\end{align*}\]</span></p>
+<p>In other words, we’ve solved the system! The solution is <span
+class="math inline">\(x = -\frac 23\)</span>, <span
+class="math inline">\(y = \frac 73\)</span>. Of course, you could’ve
+solved this directly. The advantage really comes when dealing with
+bigger systems, with more variables and more equations.</p>
+</div>
+<div class="problem">
+<p><strong>Problem: </strong>Use row operations to solve the system
+<span class="math display">\[\begin{align*}
+2x + 4y &amp;= -4, \\
+5x + 7y &amp;= 11.
+\end{align*}\]</span></p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>We will row reduce the matrix: <span
+class="math display">\[
+\left(\begin{array}{rrr}
+2 &amp; 4 &amp; -4 \\
+5 &amp; 7 &amp; 11
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 1 by 2 <span class="math display">\[
+\left(\begin{array}{rrr}
+1 &amp; 2 &amp; -2 \\
+5 &amp; 7 &amp; 11
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 5 times row 1 from row 2 <span class="math display">\[
+\left(\begin{array}{rrr}
+1 &amp; 2 &amp; -2 \\
+0 &amp; -3 &amp; 21
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 2 by -3 <span class="math display">\[
+\left(\begin{array}{rrr}
+1 &amp; 2 &amp; -2 \\
+0 &amp; 1 &amp; -7
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 2 times row 2 from row 1 <span class="math display">\[
+\left(\begin{array}{rrr}
+1 &amp; 0 &amp; 12 \\
+0 &amp; 1 &amp; -7
+\end{array}\right)
+\]</span></p>
+<p>So the solution is <span class="math inline">\(x=12\)</span>, <span
+class="math inline">\(y=-7\)</span>.</p>
+</div>
+<div class="problem">
+<p><strong>Problem: </strong>Solve the system of three variables in
+three equations: <span class="math display">\[\begin{align*}
+x - 3z &amp;= 8 \\
+2x + 2y + 9z &amp;= 7 \\
+y + 5z &amp;= -2
+\end{align*}\]</span></p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>The strategy is still to make the matrix
+be the identity matrix, because that will mean we’ve solved the system.
+Here’s one approach:</p>
+<p>First, we write the system in augmented matrix form:</p>
+<p><span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; -3 &amp; 8 \\
+2 &amp; 2 &amp; 9 &amp; 7 \\
+0 &amp; 1 &amp; 5 &amp; -2
+\end{array}\right)
+\]</span></p>
+<p>Now we row reduce:</p>
+<p>We will row reduce the matrix: <span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; -3 &amp; 8 \\
+2 &amp; 2 &amp; 9 &amp; 7 \\
+0 &amp; 1 &amp; 5 &amp; -2
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 1 by 1 <span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; -3 &amp; 8 \\
+2 &amp; 2 &amp; 9 &amp; 7 \\
+0 &amp; 1 &amp; 5 &amp; -2
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 2 times row 1 from row 2 <span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; -3 &amp; 8 \\
+0 &amp; 2 &amp; 15 &amp; -9 \\
+0 &amp; 1 &amp; 5 &amp; -2
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 0 times row 1 from row 3 <span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; -3 &amp; 8 \\
+0 &amp; 2 &amp; 15 &amp; -9 \\
+0 &amp; 1 &amp; 5 &amp; -2
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 2 by 2 <span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; -3 &amp; 8 \\
+0 &amp; 1 &amp; \frac{15}{2} &amp; -\frac{9}{2} \\
+0 &amp; 1 &amp; 5 &amp; -2
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 0 times row 2 from row 1 <span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; -3 &amp; 8 \\
+0 &amp; 1 &amp; \frac{15}{2} &amp; -\frac{9}{2} \\
+0 &amp; 1 &amp; 5 &amp; -2
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 1 times row 2 from row 3 <span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; -3 &amp; 8 \\
+0 &amp; 1 &amp; \frac{15}{2} &amp; -\frac{9}{2} \\
+0 &amp; 0 &amp; -\frac{5}{2} &amp; \frac{5}{2}
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 3 by -5/2 <span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; -3 &amp; 8 \\
+0 &amp; 1 &amp; \frac{15}{2} &amp; -\frac{9}{2} \\
+0 &amp; 0 &amp; 1 &amp; -1
+\end{array}\right)
+\]</span></p>
+<p>Subtracting -3 times row 3 from row 1 <span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; 0 &amp; 5 \\
+0 &amp; 1 &amp; \frac{15}{2} &amp; -\frac{9}{2} \\
+0 &amp; 0 &amp; 1 &amp; -1
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 15/2 times row 3 from row 2 <span class="math display">\[
+\left(\begin{array}{rrr|r}
+1 &amp; 0 &amp; 0 &amp; 5 \\
+0 &amp; 1 &amp; 0 &amp; 3 \\
+0 &amp; 0 &amp; 1 &amp; -1
+\end{array}\right)
+\]</span></p>
+<p>This line tells us the solution: it’s <span
+class="math inline">\(x=5\)</span>, <span
+class="math inline">\(y=3\)</span>, <span
+class="math inline">\(z=-1\)</span>.</p>
+</div>
+<p>Here’s a demonstration to automate the process for you. You can
+change the matrix in the first line, and running “evaluate” will show
+the process of row reduction.</p>
+<div class="sage">
+
+<script type="text/x-sage">
+
+my_matrix = [[2,3,1],[1,2,3]]
+
+# This script shows the steps to calculate rref(M).
+# It's lifted from Rosetta code, licensed under the GFDL 1.2.
+
+def showrref( M, uselatex=False ):
+
+    print("We will row reduce the matrix:")
+    print(M) if not uselatex else print("$$\n"+latex(M)+"\n$$\n")
+    print()
+
+    lead = 0
+    rowCount = M.nrows()
+    columnCount = M.ncols()
+    for r in range(rowCount):
+        if lead >= columnCount:
+            return
+        i = r
+        while M[i][lead] == 0:
+            i += 1
+            if i == rowCount:
+                i = r
+                lead += 1
+                if columnCount == lead:
+                    return
+        M[i],M[r] = M[r],M[i]
+        if i != r:
+          print(f"Swapping rows {r+1} and {i+1}")
+          print(M) if not uselatex else print("$$\n"+latex(M)+"\n$$\n")
+          print()
+        
+        lv = M[r][lead]
+    
+        M[r] = [ mrx / lv for mrx in M[r]]
+        print(f"Dividing row {r+1} by {lv}")
+        print(M) if not uselatex else print("$$\n"+latex(M)+"\n$$\n")
+        print()
+        
+        for i in range(rowCount):
+            if i != r:
+                lv = M[i][lead]
+                M[i] = [ iv - lv*rv for rv,iv in zip(M[r],M[i])]
+                if lv > 0:
+                    print(f"Subtracting {lv} times row {r+1} from row {i+1}")
+                else:
+                    print(f"Adding {-lv} times row {r+1} to row {i+1}")
+                print(M) if not uselatex else print("$$\n"+latex(M)+"\n$$\n")
+                print()
+        lead += 1
+
+    return M
+
+showrref(matrix(QQ,my_matrix),uselatex=False)
+
+</script>
+
+</div>
+<div class="problem">
+<p><strong>Problem: </strong>Here’s another one to try. Warning:
+something unexpected may happen when you row reduce! <span
+class="math display">\[\begin{align*}
+1 &amp; 1 &amp; 1 &amp; 2 \\
+1 &amp; 3 &amp; 7 &amp; 3 \\
+2 &amp; 4 &amp; 8 &amp; 6
+\end{align*}\]</span></p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>We will row reduce the matrix: <span
+class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 1 &amp; 1 &amp; 2 \\
+1 &amp; 3 &amp; 7 &amp; 3 \\
+2 &amp; 4 &amp; 8 &amp; 6
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 1 by 1 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 1 &amp; 1 &amp; 2 \\
+1 &amp; 3 &amp; 7 &amp; 3 \\
+2 &amp; 4 &amp; 8 &amp; 6
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 1 times row 1 from row 2 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 1 &amp; 1 &amp; 2 \\
+0 &amp; 2 &amp; 6 &amp; 1 \\
+2 &amp; 4 &amp; 8 &amp; 6
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 2 times row 1 from row 3 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 1 &amp; 1 &amp; 2 \\
+0 &amp; 2 &amp; 6 &amp; 1 \\
+0 &amp; 2 &amp; 6 &amp; 2
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 2 by 2 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 1 &amp; 1 &amp; 2 \\
+0 &amp; 1 &amp; 3 &amp; \frac{1}{2} \\
+0 &amp; 2 &amp; 6 &amp; 2
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 1 times row 2 from row 1 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 0 &amp; -2 &amp; \frac{3}{2} \\
+0 &amp; 1 &amp; 3 &amp; \frac{1}{2} \\
+0 &amp; 2 &amp; 6 &amp; 2
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 2 times row 2 from row 3 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 0 &amp; -2 &amp; \frac{3}{2} \\
+0 &amp; 1 &amp; 3 &amp; \frac{1}{2} \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 3 by 1 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 0 &amp; -2 &amp; \frac{3}{2} \\
+0 &amp; 1 &amp; 3 &amp; \frac{1}{2} \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 3/2 times row 3 from row 1 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 0 &amp; -2 &amp; 0 \\
+0 &amp; 1 &amp; 3 &amp; \frac{1}{2} \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 1/2 times row 3 from row 2 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 0 &amp; -2 &amp; 0 \\
+0 &amp; 1 &amp; 3 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right)
+\]</span></p>
+</div>
+<p>There’s something fishy happening here. The last equation says that
+<span class="math inline">\(0=1\)</span>! This is telling us that the
+system is “inconsistent”, meaning that there are no solutions. The same
+thing would happen if we started with the system <span
+class="math inline">\(x+y = 2\)</span>, <span class="math inline">\(x+y
+= 3\)</span>: of course there is no way for both of these things to be
+satisfied. In the example, the third equation is almost the sum of the
+first two, but the right sides don’t match, so there can be no
+solution.</p>
+<p>There is another reason you might end up not reaching the identity,
+which is that your original matrix might not be be square in the first
+place. This would happen if you have more variables than equations, or
+more equations than variables. Something like this:</p>
+<p><span class="math display">\[\begin{align*}
+x + y + z &amp;= 3 \\
+2x + 2y +3z  &amp;= 7
+\end{align*}\]</span></p>
+<p>When you find the augmented matrix and try to row reduce, the best
+you can do is this:</p>
+<p>We will row reduce the matrix: <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 1 &amp; 1 &amp; 3 \\
+2 &amp; 2 &amp; 3 &amp; 7
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 1 by 1 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 1 &amp; 1 &amp; 3 \\
+2 &amp; 2 &amp; 3 &amp; 7
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 2 times row 1 from row 2 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 1 &amp; 1 &amp; 3 \\
+0 &amp; 0 &amp; 1 &amp; 1
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 2 by 1 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 1 &amp; 1 &amp; 3 \\
+0 &amp; 0 &amp; 1 &amp; 1
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 1 times row 2 from row 1 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 1 &amp; 0 &amp; 2 \\
+0 &amp; 0 &amp; 1 &amp; 1
+\end{array}\right)
+\]</span></p>
+<p>You can’t really take this any further. What are the corresponding
+linear equations? The first row says <span class="math inline">\(x+y =
+2\)</span>, and the second says <span
+class="math inline">\(z=1\)</span>. There’s not enough information to
+find the solution, because there are many solutions! We know <span
+class="math inline">\(z\)</span> has to be one, but beyond that <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> could be any pair of numbers that add
+up to <span class="math inline">\(2\)</span>. One way to think of this
+is that <span class="math inline">\(y\)</span> could be anything
+whatsoever, but once we decide on <span class="math inline">\(y\)</span>
+we have to use <span class="math inline">\(x = 2-y\)</span>.</p>
+<p>Now we introduce something called “echelon form” and “row reduced
+echelon form” (rref). The idea is that once you put an augmented matrix
+into rref, no further reductions are possible. You’ve simplified the
+equations as much as possible. At that point, you are able to just read
+off the solutions from the matrix, even where there are infinitely many
+or none at all, as in the examples we’ve just seen.</p>
+<p>A matrix is in <em>echelon form</em> if it satisfies: 1. All rows of
+all <span class="math inline">\(0\)</span>’s are at the bottom of the
+matrix; 2. The leading entry (i.e. the first nonzero entry) of each row
+is to the right of the leading entry of the row above it. 3. All entries
+in a column below the leading entry of any row are <span
+class="math inline">\(0\)</span>. It’s in <em>row reduced echelon
+form</em> if additionally: 4. The leading entry of any row is a <span
+class="math inline">\(1\)</span>; 5. Each leading <span
+class="math inline">\(1\)</span> is the only nonzero thing in its
+column.</p>
+<p>Let me illustrate both by examples. Here’s a matrix in echelon
+form:</p>
+<p><span class="math display">\[
+\left(\begin{array}{rrrrr|r}
+1 &amp; 2 &amp; 2 &amp; 3 &amp; 4 &amp; 1 \\
+0 &amp; 0 &amp; 4 &amp; 7 &amp; 1 &amp; 2 \\
+0 &amp; 0 &amp; 0 &amp; 5 &amp; 1 &amp; 3 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{array}\right).
+\]</span></p>
+<p>Row reduction still hasn’t been taken as far as it could be: for
+example, we could subtract <span class="math inline">\(\frac 12\)</span>
+times the second row from the first to create a <span
+class="math inline">\(0\)</span> above the <span
+class="math inline">\(4\)</span>, which would mean one more variable
+could be eliminated. Continuing to perform row operations, we might
+eventually reach the matrix</p>
+<p><span class="math display">\[
+\left(\begin{array}{rrrrr|r}
+1 &amp; 2 &amp; 0 &amp; 0 &amp; 1 &amp; 3 \\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 3 &amp; 4 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 2 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{array}\right).
+\]</span></p>
+<p>Looking at this matrix, you can see that any further row operation is
+just going to make the situation worse. We’ve reduced as much as we can.
+On the other hand, we can see what all the solutions are just by looking
+at the matrix.</p>
+<p>What are the corresponding equations? If the variables are called
+<span class="math inline">\(v\)</span>, <span
+class="math inline">\(w\)</span>, <span
+class="math inline">\(x\)</span>, <span
+class="math inline">\(y\)</span>, and <span
+class="math inline">\(z\)</span>, then the equations are <span
+class="math display">\[\begin{align*}
+v + 2w + z &amp;= 3 \\
+x + 3z &amp;= 4 \\
+y + z &amp;= 2
+\end{align*}\]</span></p>
+<p>The variables <span class="math inline">\(v\)</span>, <span
+class="math inline">\(x\)</span>, and <span
+class="math inline">\(y\)</span> appear in just one equation each. The
+can’t be eliminated any further. But the variables <span
+class="math inline">\(w\)</span> and <span
+class="math inline">\(z\)</span> could take any values whatsoever. Once
+you pick the values of he variables <span
+class="math inline">\(w\)</span> and $$, the values of the other
+variables are completely determined. We might say that the general
+solution of the equation is: <span class="math display">\[\begin{align*}
+w &amp;= \text{anything}, \\
+z &amp;= \text{anything,}
+v &amp;= 3 - 2w - z, \\
+x &amp;= 4 - 3z, \\
+y &amp;= 2 - z. \\
+\end{align*}\]</span></p>
+<p>This is how it works for any number of equations in any number of
+variables. The variables <span class="math inline">\(w\)</span> and
+<span class="math inline">\(z\)</span> are called <em>free
+variables</em>. They can take any value. Once you’ve decided on the
+values of the free variables, they determine the values of all the other
+variables, which are called <em>pivot variables</em>.</p>
+<p>The way you can recognize the free and pivot variables from the
+row-reduced matrix is this: the pivot variables correspond to the
+columns that contain the leading <span class="math inline">\(1\)</span>
+of some row. The rest of the variables are free variables. The the
+example, the leading <span class="math inline">\(1\)</span>s are in
+columns <span class="math inline">\(1\)</span>, <span
+class="math inline">\(3\)</span> and <span
+class="math inline">\(4\)</span>, corresponding to the variables <span
+class="math inline">\(v\)</span>, <span
+class="math inline">\(x\)</span>, and <span
+class="math inline">\(y\)</span>. The remaining variables <span
+class="math inline">\(w\)</span> and <span
+class="math inline">\(z\)</span> are free.</p>
+<p>Let’s try to write it all up as an algorithm, following an example.
+<span class="math display">\[\begin{align*}
+3x -2y + z &amp;= 7 \\
+2x+y-2z &amp;= 3
+\end{align*}\]</span></p>
+<ol type="1">
+<li>First, convert the linear equations into augmented matrix form.</li>
+</ol>
+<p><span class="math display">\[
+\left(\begin{array}{rrr|r}
+3 &amp; -2 &amp; 1 &amp; 7 \\
+2 &amp; 1 &amp; -2 &amp; 3
+\end{array}\right).
+\]</span></p>
+<ol start="2" type="1">
+<li>Row reduce the matrix using the three elementary row operations. Try
+to put the matrix into rref form.</li>
+</ol>
+<ol type="a">
+<li>Add a multiple of a row to another row.</li>
+<li>Multiply a row by a number</li>
+<li>Swap two rows.</li>
+</ol>
+<p>We will row reduce the matrix: <span class="math display">\[
+\left(\begin{array}{rrrr}
+3 &amp; -2 &amp; 1 &amp; 7 \\
+2 &amp; 1 &amp; -2 &amp; 3
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 1 by 3 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; -\frac{2}{3} &amp; \frac{1}{3} &amp; \frac{7}{3} \\
+2 &amp; 1 &amp; -2 &amp; 3
+\end{array}\right)
+\]</span></p>
+<p>Subtracting 2 times row 1 from row 2 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; -\frac{2}{3} &amp; \frac{1}{3} &amp; \frac{7}{3} \\
+0 &amp; \frac{7}{3} &amp; -\frac{8}{3} &amp; -\frac{5}{3}
+\end{array}\right)
+\]</span></p>
+<p>Dividing row 2 by 7/3 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; -\frac{2}{3} &amp; \frac{1}{3} &amp; \frac{7}{3} \\
+0 &amp; 1 &amp; -\frac{8}{7} &amp; -\frac{5}{7}
+\end{array}\right)
+\]</span></p>
+<p>Adding 2/3 times row 2 to row 1 <span class="math display">\[
+\left(\begin{array}{rrrr}
+1 &amp; 0 &amp; -\frac{3}{7} &amp; \frac{13}{7} \\
+0 &amp; 1 &amp; -\frac{8}{7} &amp; -\frac{5}{7}
+\end{array}\right)
+\]</span></p>
+<ol start="3" type="1">
+<li>Read off the solutions from rref. The first step is to identify the
+pivot and free variables; the free variables can take any values, but
+once those values are decided, the values of the pivot variables are
+set.</li>
+</ol>
+<p>In this case, <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> are pivots, and <span
+class="math inline">\(z\)</span> is free. The general solution is that
+<span class="math inline">\(z\)</span> can take any value, and then
+<span class="math inline">\(x = \frac{13}{7} + \frac{3}{7}z\)</span> and
+<span class="math inline">\(y = -\frac{5}{7} +
+\frac{8}{7}z\)</span>.</p>
+<div class="problem">
+<p><strong>Problem: </strong>Find the general solution of the system
+<span class="math display">\[\begin{align*}
+x + 3y + 4z &amp;= 7 \\
+3x + 9y + 7z &amp;= 6
+\end{align*}\]</span></p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>TODO</p>
+</div>
+<p>Solving large linear systems is useful in many contexts. One were it
+can be applied mostly directly is in balancing systems of chemical
+reactions. Here’s an example:</p>
+<div class="problem">
+<p><strong>Problem: </strong>Balance the chemical reaction: _ Na3 PO4 +
+_ Ba (NO3)2 -&gt; _ Ba3 (PO4)2 + _ NaNO3</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>Each of the elements gives us a linear
+equation. The system we get is <span
+class="math display">\[\begin{align*}
+x_1 - x_4 &amp;= 0 \\
+x_2 - 3x_3 &amp;= 0 \\
+x_1-2x_3 &amp;= 0 \\
+2x_2 - x_4 &amp;= 0
+\end{align*}\]</span></p>
+</div>
+<p>TODO: Add some actual applications.</p>
+<h1 id="references">References</h1>
+<p>At PSU we might teach this out of the book by Lay-Lay-McDonald? I
+have not actually taught it here, but that’s a popular choice.</p>
+<p>Another classic is Strang’s book.</p>
+</body>
+</html>

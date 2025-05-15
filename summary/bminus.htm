@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>John Lesieutre: The diminished base locus</title>
+
+<link rel="stylesheet" type="text/css" href="../css/style.css" media="screen" />
+
+<script src="index_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38900286-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+<div id="wrap">
+  <div id="top">
+    <h1>John Lesieutre</h1>
+  </div>
+
+  <div id="topmenu">
+    <div class="lefts"> 
+      <ul>
+        <li><a href="../index.htm">HOME</a></li>
+        <li><a href="../research.htm">RESEARCH</a></li>
+        <li><a href="../teaching.htm">TEACHING</a></li>
+        <li><a href="../summary/index.htm">INTRO</a></li>
+<!--        <li><a href="../personal/index.htm">PERSONAL</a></li>  -->
+        <li><a href="../cv.htm">CV</a></li>
+        <li><a href="../contact.htm">CONTACT</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="main">
+    <div id="maintext">
+      <div class="bottomnav">
+<a class="bottomnav" href="multiplicity.htm">&laquo; Prev</a>
+| <a class="bottomnav" href="index.htm">Index</a>
+| Next &raquo;
+</div>
+
+<h2>Changes in the base locus</h2>
+
+<p> Here we continue to explore the dependence of the base locus on
+the degree and multiplicities of a collection of surfaces at given
+points.  Remember two basic observations made on the <a
+href="multiplicity.htm">previous page</a>: </p>
+
+<ol class="numberlist">
+<li>If <span class="inline">d</span> is increased, the number of
+surfaces increases, and the base locus shrinks.</li>
+<li>If any of the <span class="inline">m<sub>i</sub></span> are
+increased, the number of surfaces decreases, and the base locus
+grows.</li>
+</ol>
+
+<p> The following diagram illustrates a few cases of this dependence
+when there are only two points in space.  Here's what it's showing:
+the point <span class="inline">(d,m<sub>1</sub>,m<sub>2</sub>)</span>
+is colored red if there are no surfaces at all which satisfy the
+conditions, yellow if there are such surfaces, but the collection of
+such surfaces has the line between the two points as its base locus
+(i.e. any surface with the given degree and multiplicity necessarily
+contains the line).  A point is green if the set of surfaces with
+given degree and multiplicity has no base locus at all.
+</p>
+
+<p> A choice of degrees and multiplicities, corresponding to a point
+<span class="inline">(d,m<sub>1</sub>,m<sub>2</sub>)</span>, is called
+a <i>divisor</i>.</p>
+
+<div style="text-align:center">
+<img src="images/bs.png" alt="Base loci of surfaces through two given points"/>
+</div>
+
+<p> Some of the points illustrated in the diagram are examples we've
+considered before:  </p>
+
+<ul class="bulletlist"> 
+
+<li>If <span class="inline">d = 2</span>, <span
+class="inline">m<sub>1</sub> = 1</span>, and <span
+class="inline">m<sub>2</sub> = 1</span>, we are considering all
+quadrics which go through two given points.  There are many such, and
+the collection has no base locus. The point is colored green in the
+picture. </li>
+
+<li>If <span class="inline">d = 1</span>, <span
+class="inline">m<sub>1</sub> = 1</span>, and <span
+class="inline">m<sub>2</sub> = 1</span>, this is the collection of
+planes through the two points.  It is shaded yellow because the base
+locus is the line between the two points.  </li>
+
+<li>If <span class="inline">d = 1</span>, <span
+class="inline">m<sub>1</sub> = 1</span>, and <span
+class="inline">m<sub>2</sub> = 2</span>, we are asking for a degree
+one surface (a plane) which has a point of multiplicity 2, which is
+impossible -- a plane never has a point of multiplicity greater than
+1.  The corresponding point is colored red.</li>
+
+</ul>
+
+<p> Both of the trends noted above can clearly be seen in the diagram.
+Starting with two given multiplicities, say <span
+class="inline">m<sub>1</sub> = 1</span>, and <span
+class="inline">m<sub>2</sub> = 1</span>, increasing the degree moves
+vertically in the diagram.  Starting at a red point (there are no
+surfaces of degree 0), we move to a yellow point (the planes through the
+two points have base locus the line), and then reach green point (the
+collection of quadric surfaces through two points has no base locus).
+</p>
+
+<div style="text-align:center">
+<img src="images/bsc1.png" alt="Base loci of surfaces through two given points"/>
+</div>
+
+<p> Similarly, if we start with a given degree and multiplicity at one
+point, and then increase the multiplicity at the second point, the
+base locus grows, and the points move from green, to yellow, to red.
+For example, take <span class="inline">d = 2</span> and <span
+class="inline">m<sub>2</sub> = 2</span>.  If <span
+class="inline">m<sub>1</sub> = 0</span>, the collection of surfaces
+has no base locus.  If <span class="inline">m<sub>1</sub> = 1</span>
+or <span class="inline">m<sub>1</sub> = 2</span>, there still exist
+such quadric surfaces, but the line between the two points is the the
+base locus.  If <span class="inline">m<sub>1</sub> = 3</span>, there
+are no such surfaces at all.  </p>
+
+<div style="text-align:center">
+<img src="images/bsc2.png" alt="Base loci of surfaces through two given points, changing m_2"/>
+</div>
+
+<br />
+<h2>Chambers for the base locus</h2>
+
+<p> It is apparent that the green, yellow, and red points are not
+dispersed at random in the diagram: the space is divided into several
+regions, and within a given region, all the points have the same
+color.  </p>
+
+<div style="text-align:center">
+<img src="images/cone.png" alt="Base loci of surfaces through two given points, changing d"/>
+</div>
+
+<p> This is a nice picture, but how to interpret it is less clear.
+What does it mean that the point with <span class="inline">d =
+2</span>, <span class="inline">m<sub>1</sub> = 1</span>, and <span
+class="inline">m<sub>2</sub> = 1.5</span> is inside the yellow
+chamber?  It doesn't make sense to talk about surfaces with multiplicity
+1.5 at a point, since the multiplicity is always an integer.  One approach is
+to just consider what happens after multiplying everything by some
+integer in order to get a more sensible divisor; the base locus of
+<span class="inline">d = 2</span>, <span class="inline">m<sub>1</sub>
+= 1</span>, and <span class="inline">m<sub>2</sub> = 1.5</span> should
+be regarded as that of <span class="inline">d = 4</span>, <span
+class="inline">m<sub>1</sub> = 2</span>, and <span
+class="inline">m<sub>2</sub> = 3</span>.  There is a slight
+distinction here, which we'll ignore; looking at the base locus of
+multiples of a divisor really defines the <i>stable base locus</i>.
+</p>
+
+<p> This definition will work as long as it's possible to clear the
+denominators of the degree and all the multiplicities.  If the points
+have irrational coordinates, even this is not good enough; it's
+necessary to first slightly nudge the coefficients to get rational
+numbers, and then multiply by some integer to clear the denominators.
+There are two ways to go about this: we can either slightly increase
+the degree and slightly decrease the multiplicities (making it easier
+to find satisfactory surfaces), or decrease the degree and increase
+the multiplicity (adding restrictions, and giving a larger base
+locus).  These two approaches yield the <i>augmented base locus</i>
+and <i>diminished base locus</i> respectively, which will be defined
+soon.  </p>
+
+<p> Note that the corresponding picture for surfaces going through
+three different points would be more complicated, because there are
+more possibilities for the base locus: for some values of the
+parameters, the base locus is the line between the first two points;
+for others, between the first and the third; for still others, the
+second and the third.  It's also possible that the base locus is the
+entire plane through the three points.  With more than three points,
+there are even more possibilities for the base locus.  </p>
+
+<br />
+<h2>The augmented and diminished base loci</h2>
+
+<p> The points which lie on the boundaries between the two different
+chambers pose something of an enigma.  Just knowing the base locus of
+such a collection of surfaces doesn't tell the whole story: we'd like
+to know that, e.g., although a certain point is colored red, nudging
+it by even a tiny amount would yield a green point.  To capture this
+new information, we name two new properties of a divisor:
+</p> <ul class="bulletlist">
+
+<li> The <i>augmented base locus</i> of a divisor is the base locus we
+obtain when the divisor is nudged just a little bit in the "negative"
+direction: <span class="inline">d</span> is decreased slightly, and
+each of the <span class="inline">m<sub>i</sub></span> is increased
+slightly.
+
+The augmented base locus contains the familiar base locus: decreasing
+<span class="inline">d</span> and increasing each <span
+class="inline">m<sub>i</sub></span> means that there are fewer
+surfaces which meet all the requirements, and so the base locus is
+bigger.  </li>
+
+<li> The <i>diminished base locus</i> of a divisor is the base locus
+obtained when the divisor is nudged in the "positive direction": <span
+class="inline">d</span> is increased slightly, and each of the <span
+class="inline">m<sub>i</sub></span> is decreased slightly.
+
+The diminished base locus is contained in the usual base locus,
+because nudging the parameters "positively" means that it's easier for
+a surface to satisfy the requirements, so there are more of them and a
+smaller base locus.  </li>
+
+</ul>
+
+<p> Usually the augmented base locus and diminished base locus are the
+same thing, and they both agree with the regular base locus.  If a
+divisor is in the middle of the yellow chamber in the earlier diagram,
+then any divisor obtained when the divisor is nudged in some direction
+is also in the yellow chamber, and all the nudged divisors have the
+same base locus.  </p>
+
+<p>The new information which is remembered by the augmented base locus
+and the diminished base locus is useful only for points which are on
+the boundaries between two different chambers.  In essence, the
+augmented and diminished base locus tell which chambers a point
+borders, even though the point itself is contained in only one of
+them.  </p>
+
+<p> Unfortunately, the definitions above aren't quite right, because
+the behavior of the base loci can be more complicated than our
+examples reveal.  When there are at least nine points involved, base
+loci of collections of degree <span class="inline">d</span> surfaces
+can be extremely complicated: the base locus need not be just a line
+or a plane, but can include other curves as well.  In fact, once there
+are at least nine points, there are infinitely many different
+possibilities for the base locus, and thus infinitely many different
+chambers in the corresponding diagram!  </p>
+
+<p> Even worse, it's no longer possible to say what it means to
+perturb a divisor by a small amount and see what chamber it lands it.
+The chambers can be meet in strange ways, as in the following
+schematic: </p>
+
+<div style="text-align:center">
+<img src="images/accum.png" alt="Accumulation of chambers"/>
+</div>
+
+<p> Here, there are infinitely many chambers, each colored a different
+shade of green, which get smaller and smaller and closer and closer
+together as they get close to the divisor <span
+class="inline">D</span>.  From the perspective of the diminished base
+locus, this situation is extremely strange.  The diminished base locus
+is supposed to indicate what the base locus is when a divisor is
+perturbed slightly.  In the example with two points in space, the
+precise perturbation used didn't make any difference. Here, however,
+it does: nudging <span class="inline">D</span> to the right in this
+diagram will put it in one of the green chambers, but which chamber we
+end up in depends very strongly on the amount of the perturbation.
+There is no way to make sense of our definition of the diminished base
+locus.  </p>
+
+<p> The base loci of the divisors in the above example are equally
+surprising.  Moving towards <span class="inline">D</span> into lighter
+and lighter green chambers, divisors have more and more complicated
+base loci.  In fact, the <span class="inline">n</span><sup>th</sup>
+chamber from the left corresponds to divisors whose base locus
+consists of about <span class="inline">n</span> different curves.  As
+a result, the smaller the perturbation of <span
+class="inline">D</span>, the more curves are in the base locus of the
+perturbed divisor.  Our amended definition of the diminished base
+locus is that it's the combination of all the different base loci
+corresponding to the infinitely many chambers near <span
+class="inline">D</span>.  The diminished base locus of <span
+class="inline">D</span> consists of infinitely many curves!  </p>
+
+<p> The situation illustrated in the diagram really can arise: there
+exists a certain divisor <span class="inline">D</span>, appearing when
+nine points are in play, for which the diminished base locus contains
+infinitely many curves.  Making smaller and smaller perturbations of
+<span class="inline">D</span>, we find divisors with more and more
+curves in the base locus. </p>
+
+<p><a href="../docs/bminus.pdf">One example</a> of such a divisor has
+for parameters certain irrational numbers given approximately by
+</p>
+
+<table style="padding-left: 10px; border-spacing: 15px 0px; margin-left: auto; margin-right: auto;">
+<tr>
+<td><span class="inline">d</span></td>
+<td><span class="inline">m<sub>1</sub></span></td>
+<td><span class="inline">m<sub>2</sub></span></td>
+<td><span class="inline">m<sub>3</sub></span></td>
+<td><span class="inline">m<sub>4</sub></span></td>
+<td><span class="inline">m<sub>5</sub></span></td>
+<td><span class="inline">m<sub>6</sub></span></td>
+<td><span class="inline">m<sub>7</sub></span></td>
+<td><span class="inline">m<sub>8</sub></span></td>
+<td><span class="inline">m<sub>9</sub></span></td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.640</td> 
+<td>0.634</td> 
+<td>0.615</td>
+<td>0.554</td>
+<td>0.355</td>
+<td>0.352</td>
+<td>0.341</td>                                
+<td>0.307</td>
+<td>0.197</td>
+</tr>
+</table>
+
+<div class="bottomnav">
+<a class="bottomnav" href="multiplicity.htm">&laquo; Prev</a>
+| <a class="bottomnav" href="index.htm">Index</a>
+| Next &raquo;
+</div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

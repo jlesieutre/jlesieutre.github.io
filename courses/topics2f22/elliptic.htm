@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Elliptic Curves</title>
+  <link rel="stylesheet" href="styles.css">
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Elliptic Curves</h1>
+</header>
+<p>This chapter deals with elliptic curve cryptography, which is a lot
+of fun. It’s more secure than RSA for sure, <a
+href="https://blog.trailofbits.com/2019/07/08/fuck-rsa/">as you can read
+here</a>.</p>
+<h1 id="introduction">Introduction</h1>
+<p>The most important thing to know is how to add two points on an
+elliptic curve.</p>
+<figure>
+<img src="images/ell_1.png" alt="An elliptic curve" />
+<figcaption aria-hidden="true">An elliptic curve</figcaption>
+</figure>
+<div class="problem">
+<p><strong>Problem: </strong>Add the two points <span
+class="math inline">\((3,5)\)</span> and <span
+class="math inline">\((2,10)\)</span> on the elliptic curve <span
+class="math inline">\(y^2 = x^3 - 3x+2\)</span>.</p>
+</div>
+<div class="solution">
+<p><strong>Solution: </strong>I would solve it here.</p>
+</div>
+<p>You can also add points on an elliptic curve modulo <span
+class="math inline">\(p\)</span>. You use the same formulas. Although
+the “curve” is now just a discrete set of points, you can imagine the
+same operation is happening.</p>
+<h2 id="sage-demonstration">Sage demonstration</h2>
+<p>Here’s a demo.</p>
+<div class="sage">
+
+<script type="text/x-sage">
+
+var('x,y')
+implicit_plot(y^2-(x^3-x)==0,(x,-3,3),(y,-3,3))
+
+</script>
+
+</div>
+<p>This shows the plot of an elliptic curve. You can change the
+parameters and see how the plot changes.</p>
+<p>Now you know about elliptic curves!</p>
+</body>
+</html>

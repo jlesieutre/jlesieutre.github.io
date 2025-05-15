@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Fractals and Dynamical Systems</title>
+  <link rel="stylesheet" href="styles.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Fractals and Dynamical Systems</h1>
+</header>
+<p>Here is a SageCell that will compute iterates of a point under a
+quadratic map. You can use it to help figure out which points have
+bounded orbits.</p>
+<div class="sage">
+
+<script type="text/x-sage">
+
+c = -0.4 + 0.6*I
+f(x) = x^2 + c
+x0 = 0
+
+xlist = [x0]
+numits = 20
+for j in range(numits):
+    xlist.append(f(xlist[-1]))
+    
+for j in range(10):
+    print(xlist[-j])
+
+</script>
+
+</div>
+<p><a href="https://marksmath.org/visualization/julia_sets/">Here is
+somebody else’s program to draw nice Julia sets.</a></p>
+<h1 id="references">References</h1>
+</body>
+</html>
